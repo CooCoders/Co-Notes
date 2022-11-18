@@ -49,14 +49,15 @@ Vite 对上述两个问题进行了改进
 
 ## 搭建 Vite 项目
 
-初始化项目，首先使用命令：`npm init vite`，之后的几步是：
+初始化项目，首先使用命令：`pnpm create vite`，之后的几步是：
 
 - Project Name：输入项目名称（直接输入即可）
 - Select a framework：选择项目框架（可选择有 vanilla、vue、react等）
 - Select a variant：选择框架变体
 - 此时提示： `Done. Now run`，需要移动到项目下 `cd PROJECT_NAME`
-- 安装所需依赖：`npm install`
-- 启动项目：`npm run dev`
+- 安装所需依赖：`pnpm install`
+- 启动项目：`pnpm run dev`
+- [ 注意上述命令中 `npm/yarn/pnpm`可互相替代 ]
 
 ### 项目结构
 
@@ -69,12 +70,14 @@ Vite 对上述两个问题进行了改进
   - App.vue、main.js
 - index.html：程序入口文件
 - vite.config.js：vite 的配置文件
+- pnpm-lock.yaml：pnpm 的依赖，不要修改
 
 ### 引入
 
 如果出现 import 导入语法错误，检查引入 `main.js`：
 
 ```
+// cannot use import statement outside a module
 <script type="module" src="/src/main.js"></script>
 ```
 
