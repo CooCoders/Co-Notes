@@ -11,3 +11,4 @@
 - TypeScript
 - Vue (learning)
 - Java (learning)
+- Electron (learning~~)
