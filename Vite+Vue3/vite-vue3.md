@@ -63,7 +63,7 @@ Vite 对上述两个问题进行了改进
 
 几个重要文件结构：
 
-- public目录：目录下的文件是可以直接访问的
+- public目录：目录下的文件是可以直接访问的（在根路径后直接跟文件名）
 - src目录：存放所有的源代码文件
   - assets目录：存放资源
   - components目录：组件
@@ -89,3 +89,105 @@ Vite 对上述两个问题进行了改进
 </script>
 ```
 
+
+
+### NPM 依赖解析和预构建
+
+预构建过程的两个目的：
+
+- CommonJS 和 UMD 兼容性：将 CommonJS 等导入模块的语法自动转化为 esm 语法，例如对于 vue 的引入：
+
+  ```
+  import { createApp} from 'vue'
+  ```
+
+- 提高性能：如果要导入的一个模块内文件较多，会发出较多的 http 请求，造成浏览器阻塞，预构建过程中会将这些文件打包成一个模块进行请求
+
+### esbuild 打包器
+
+esbuild 是一个 JS 打包工具，vite 也使用了该工具，esbuild 的特点有：
+
+- 极快的速度而不需要缓存
+- ES6 和 CommonJS 模块支持
+- ES6 模块的 tree shaking
+- TS 和 JSX 语法支持
+- Source maps 支持
+- 简化打包
+- 插件支持
+
+### vue3 第一个例子
+
+vue3 语法上对 vue2 组件进行了简化，例如：
+
+```vue
+<!-- test vue component -->
+<template>
+  <div>
+    <h3>this is a test setence</h3>
+    <p>{{ count }}</p>
+    <button @click="add">add</button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+// 将 count 实现为 RefImp
+const count = ref(0)
+console.log(count)
+const add = () => {
+  count.value += 1
+}
+</script>
+<style lang="stylus" scoped></style>
+```
+
+### 关于快速生成 vue3 文件模板
+
+可在 设置 - 配置用户代码片段 中设置自定义的模板，输入自定义的命令名称（如果没有会自动生成 json 文件），并在该 json 文件中写入：
+
+```json
+注意第一个花括号在模板中已经自动生成
+{
+  "Print to console":{
+    "prefix": "vue3",
+
+    "body": [
+
+      "<template>",
+
+      "  <div>",
+
+      "",
+
+      "  </div>",
+
+      "</template>",
+
+      "",
+
+      "<script setup lang='ts'>",
+
+      "import{ref,reactive} from 'vue'",
+
+      "",
+
+      "</script>",
+
+      "<style scoped>",
+
+      "",
+
+      "</style>",
+
+    ],
+
+    "description": "Log output to console"
+
+  }
+
+}
+```
+
+
+
+### 模板语法
