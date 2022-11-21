@@ -4,6 +4,7 @@
 
 - H5+CSS3
 - Flex layout
+- Grid layout
 - JavaScript
 - jQuery
 - Ajax
