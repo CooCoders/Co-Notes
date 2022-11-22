@@ -73,9 +73,43 @@ Linux 下一切皆文件
 - `halt`关机
 - `reboot`重启
 
+注意登录的时候少用 root 账号，避免操作失误，在普通账号下，使用`su root`切换为系统管理员，在 root 账号下，使用`logout`命令注销用户（root 注销后为普通用户，再次注销后退出系统）
 
+此外 `logout` 命令在图形运行级别无效，在运行级别3下有效
 
+## 用户管理
 
+### 添加用户
+
+在 root 账号下，使用命令`useradd USERNAME`添加用户，创建用户成功后，会自动创建和用户名同名的家目录，也可以通过 `useradd -d TARGET_DIR`为新创建的用户指定家目录
+
+(root用户->普通用户：`su - USERNAME`，反之使用 `su - root`)
+
+### 修改密码
+
+为用户设置密码命令：`passwd USERNAME`，输入即可
+
+### 删除用户
+
+使用命令`userdel USERNAME`删除用户，此时保留家目录，如同时删除家目录，使用命令：`userdel -r USERNAME`
+
+### 查询用户
+
+使用命令`id USERNAME`查询用户信息，使用命令`whoami`查询当前用户的信息
+
+### 切换用户
+
+使用指令`su - USERNAME`切换用户，从权限高的用户切换到权限低的用户无需密码，反之需要，退回到原来用户的时候使用 `exit`或者`logout`
+
+### 用户组
+
+用户组类似于角色，系统为有共性的多个用户统一进行管理
+
+新增组：`groupadd GROUPNAME`
+
+删除组：`groupdel GROUPNAME`
+
+在增加用户的同时指定组：`useradd -g GROUPNAME USERNAME`
 
 ## Q&A
 
