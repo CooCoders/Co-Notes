@@ -109,7 +109,7 @@ Linux 下一切皆文件
 
 删除组：`groupdel GROUPNAME`
 
-在增加用户的同时指定组：`useradd -g GROUPNAME USERNAME`
+变更组：`groupmod `
 
 ## Q&A
 
