@@ -148,30 +148,56 @@ Linux 下一切皆文件
 - `rmdir DIRNAME`：删除空目录，如文件夹非空，则使用`rm -rf DIRNAME`删除 （强制递归删除，危险操作）
 - `touch FILENAME`：创建空文件
 - cp 命令：
+
   - `cp [option] source dest`，例如`cp hello.txt /home/dest`将文件 hello.txt 复制到 dest 目录下
   - 使用参数`-r`递归地复制整个文件夹，例如：`cp -r /home/test /dest`
 - rm 命令：
+
   - `rm [option] file`，移除文件或文件夹，可选参数有：
     - `-r`：递归删除文件夹
     - `-f`：强制删除不提示
     - 例如，删除整个文件夹并且不提示：`rm -rf file`
 - mv 命令：重命名文件或移动文件
+
   - `mv /home/a.txt /home/b.txt`：将文件a重命名为b
   - `mv /home/a.txt /home/dest`：将文件a移动到 dest 文件夹下
   - `mv /home/a.txt /home/dest/b.txt`：将文件a移动到 dest 文件夹下并重命名为b
   - 移动文件夹，例如：`mv /home/a /home/b/`，与移动文件方式相同
 - cat 命令：查看文件内容：
+
   - `cat -n file`查看文件内容，参数`-n`表示显示行号
   - 与管道命令结合：`cat -n file | more`
 - more 命令：基于 VI 编辑器的文本过滤器，按页显示文本文件内容，其快捷键有：
+
   - space：下一页
   - enter：下一行
   - q：离开 more
   - ctrl + f：向下滚动一屏
   - ctrl + b：返回上一屏
   - =：输出当前行的行号
+- less 命令：与 more 类似，只是 more 显示文本的时候会将内容全部加载到内存，而 less 则是动态加载，因此更适合查看较大的文件，例如：`less /etc/profile`
 
+  - pageup：上一页
 
+  - pagedown：下一页
+
+  - /str ：查找某个字符串
+
+  - q：退出
+ - echo 命令：输出内容到控制台
+    - 例如`echo $PATH`，`echo $HOSTNAME`
+    - 也可以配合`>`输出到文件：`echo hello > info.txt`
+- head 命令：
+  - `head -n FILENAME`查看文件的开头部分，如省略n，默认情况下显示前10行
+- tail 命令：与 head 命令类似，查看文件末尾部分
+  - 例如：`tail -n FILENAME`
+  - 使用`tail -f FILENAME`实时监控文件的变化
+- `>, >>`命令：输出内容到指定文件
+  - `>`会覆盖原始文件，例如：`ls -l /home > info.txt`
+  - `>>`表示追加方式写入，例如将日期信息追加进 mycal 文件：`cal >> mycal`
+  - 应用场景，例如将环境变量写入另一个文件：`cat /etc/profile > myprofile`
+
+  
 
 
 
