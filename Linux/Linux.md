@@ -143,6 +143,7 @@ Linux 下一切皆文件
 
 - pwd 命令：输出当前工作目录的绝对路径
 - ls命令：列出当前目录下的所有文件，常用的参数有`-a/-l`表示输出
+    - 使用`ls -l`打印详细信息的时候，文件大小显示不够直观，可以使用`ls -lh`将b单位转化为 M 等单位，方便直观查看大小
 - cd命令：切换到指定路径，`cd ~`回到当前用户的家目录，`cd ..`返回上层目录
 - `mkdir DIRNAME`：创建一级目录，可以使用`mkdir -p DIRNAME1/DIRNAME2`创建多级目录（多层目录同时创建）
 - `rmdir DIRNAME`：删除空目录，如文件夹非空，则使用`rm -rf DIRNAME`删除 （强制递归删除，危险操作）
@@ -212,6 +213,14 @@ Linux 下一切皆文件
   - 参数 -s 用于设置时间：`date -s DATESTR`，例如：`date -s "2222-12-12 12:12:12"`
 - cal 命令：打印日历
   - `cal 2022`表示打印 2022 年历
+
+### 查找命令
+
+- find 命令：从指定目录下遍历查找某个文件
+  - 格式：`find [RANGE] [OPTION]`，选项参数有三个，`-name`表示按照文件名查找，`-user`按照所属用户查找，`-size`表示按照文件大小查找
+  - 例如：`find /home -name hello.txt`，表示从 home 目录开始查找 hello.txt 文件
+  - `find /home -user root | more`表示从 home 目录开始查找 root 用户的目录，并按页打印
+  - `find /home -size +100M`表示查找大小大于100M的文件，可用的单位有`k, M, G`
 
 ## Q&A
 
