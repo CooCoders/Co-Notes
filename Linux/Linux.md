@@ -221,6 +221,9 @@ Linux 下一切皆文件
   - 例如：`find /home -name hello.txt`，表示从 home 目录开始查找 hello.txt 文件
   - `find /home -user root | more`表示从 home 目录开始查找 root 用户的目录，并按页打印
   - `find /home -size +100M`表示查找大小大于100M的文件，可用的单位有`k, M, G`
+- locate 命令
+  - locate 命令可以快速定位文件位置，需要更新数据库索引
+    - 更新数据库索引`updatedb`，搜索文件：`locate FILENAME`
 
 ## Q&A
 
