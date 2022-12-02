@@ -197,7 +197,6 @@ Linux 下一切皆文件
   - `>`会覆盖原始文件，例如：`ls -l /home > info.txt`
   - `>>`表示追加方式写入，例如将日期信息追加进 mycal 文件：`cal >> mycal`
   - 应用场景，例如将环境变量写入另一个文件：`cat /etc/profile > myprofile`
-
 - link 命令：用于创建软链接（符号链接）：
     - 例如：`ln -s /home /home/myroot`，此时使用 ll 命令查看 home 目录，可以看到`myroot -> /home/`
     - 使用 pwd 命令查看软链接路径的时候，看到的依然为软链接所在的目录
@@ -224,6 +223,10 @@ Linux 下一切皆文件
 - locate 命令
   - locate 命令可以快速定位文件位置，需要更新数据库索引
     - 更新数据库索引`updatedb`，搜索文件：`locate FILENAME`
+- grep 命令：过滤查找，| 管道符号，表示将前一个命令的处理结果输出传递给后面的命令处理
+  - 命令格式： `grep [option] CONTENT SOURCE_FILE`
+  - 常用的选项有`-n`， `-i`
+  - 例如：`cat /home/test.txt | grep "yes"`和`grep -n "yes" /home/test.txt`表示在 test.txt 文件中查找 yes 文本
 
 ## Q&A
 
