@@ -228,6 +228,27 @@ Linux 下一切皆文件
   - 常用的选项有`-n`， `-i`
   - 例如：`cat /home/test.txt | grep "yes"`和`grep -n "yes" /home/test.txt`表示在 test.txt 文件中查找 yes 文本
 
+### 压缩与解压缩
+
+- gzip 命令用于压缩文件，gunzip 命令用于解压缩文件（注意不能压缩文件夹）
+  - 例如：`gzip /home/hello.txt`与`gunzip /homt/hello.txt.gz`
+- zip/unzip 命令用于压缩与解压缩文件或文件夹，格式为：`zip [option] ZIPNAME.zip ZIPPING_FILE`，解压缩命令格式：`gunzip [option]  ZIPFILE.zip`
+  - 参数`-r`：用于递归压缩文件夹 
+  - 例如：`zip -r test.zip /home/test `表示将 test 文件夹压缩为 test.zip
+  - unzip参数 `-d TARGET_DIR` 表示将压缩文件解压到的地方
+  - 例如`unzip -d /home/test2 /home/test.zip` 表示将 test.zip 解压缩至 test2 文件夹
+- tar 命令：打包命令，生成`xxx.tar.gz`文件
+  - 格式：`tar [option] xxx.tar.gz ZIPPING_FILE`
+  - 主要参数：
+    - -c ：产生 tar  打包文件
+    - -v ： 显示详细信息
+    - -f ： 指定压缩后的文件名
+    - -z ： 打包同时压缩
+    - -x ： 解包 tar 文件
+  - 例如： 压缩多个文件：`tar -zcvf /home/ab.tar.gz /home/a.txt /home/b.txt`表示将 a.txt 和 b.txt 文件压缩为 ab.tar.gz 文件
+  - 压缩整个文件夹：`tar -zcvf test.tar.gz /home/test `解压缩：`tar -zxvf test.tar.gz`
+  - 将某个压缩文件解压缩至某个文件夹：`tar -zxvf test.tar.gz -C /home/test2`
+
 ## Q&A
 
 ### 1. Linux 无法获得锁 /var/lib/dpkg/lock-frontend-open
