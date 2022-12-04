@@ -393,7 +393,21 @@ root         9     8  0 09:53 ?        00:00:00 /init
 
 ### 杀死进程
 
-需要停止进程成，使用 kill 命令，格式为 `kill [option] PID`，或者使用 killall 命令`killall PID`，
+需要停止进程成，使用 kill 命令，格式为 `kill [option] PID`，或者使用 killall 命令`killall PID`，killall 命令支持通配符，当系统很卡的时候非常有效
+
+kill 命令常用的参数为 9 ，表示强制杀死进程：`kill -9 PID`
+
+例如
+
+- 终止远程登录服务 sshd，`kill sshd_PID`，重启该 sshd 服务：`/bin/systemctl start sshd.service`
+- 同时终止多个 gedit 进程：`killall gedit`
+
+### 进程树
+
+使用命令 `pstree [option]`打印树形式的进程信息，常用参数有：
+
+- p 同时显示进程的 PID
+- u 显示进程的所属用户
 
 ## 日志相关
 
