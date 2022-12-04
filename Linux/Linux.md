@@ -409,6 +409,48 @@ kill 命令常用的参数为 9 ，表示强制杀死进程：`kill -9 PID`
 - p 同时显示进程的 PID
 - u 显示进程的所属用户
 
+## 服务
+
+### 查看服务
+
+服务（service）本质上就是进程，但是通常运行在后台，并监听某个端口，等待某个程序的请求，也被称为守护进程，例如 sshd 使用的 22 端口，mysqld 使用的 3306 端口。
+
+服务管理命令：`service SERVICE_NAME [start|stop|restart|reload|status]`，注意在 centos 7 之后往往使用 `systemctl`代替`service`
+
+查看服务：
+
+- 使用 `setup` 命令
+- 使用`ls -l /etc/init.d`命令
+
+ 开机流程：
+
+```
+开机 - BIOS - /boot - systemd进程1 - 运行级别 - 运行运行级别对应的服务
+              引导                 确定运行级别
+```
+
+### 管理服务
+
+systemctl 管理命令，格式为：`systemctl [start | stop | restart | status] SERVICE_NAME`，systemctl 命令所管理的服务可以在 `/usr/lib/systemd/system`中查看
+
+systemctl 常用的命令有：
+
+- `systemctl list-unit-files |grep ` 按照 grep 过滤的规则查看服务开机启动的状态
+- `systemctl enable SERVICE_NAME` 设置服务开机启动
+- `systemctl disable SERVICE_NAME` 关闭服务开机自启动
+- `systemctl is-enabled SERVICE_NAME` 查询某个服务是否自启动
+
+例如，对防火墙服务 (firewalld.service) 的设置：
+
+- `systemctl status firewalld`：查看防火墙服务状态
+- `systemctl stop firewalld.service`：临时关闭防火墙（重启系统后失效，如永久关闭，需要使用 disable 命令），此外，可以简写服务名称 （`firewalld.service` ->`firewalld`，即简写为点号前面的内容）
+
+### 打开或关闭指定的端口
+
+防火墙打开的同时打开某个端口：
+
+- 打开端口：`firewall-cmd --permanent --add-port=PORT_ID`
+
 ## 日志相关
 
 
