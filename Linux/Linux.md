@@ -393,7 +393,18 @@ sudo rm /var/lib/dpkg/lock-frontend
 
 在 linux 下，打开：`vim /etc/hosts`在文件中添加同上内容，即可使用 ping 命令按照主机名测试通讯
 
+### 主机名解析过程
 
+Hosts：一个用于记录 IP 和 Hostname 的映射关系
+
+DNS：（Domain Name System），作为域名和 IP 地址相互映射的一个分布式数据库
+
+主机名解析过程：
+
+- 浏览器首先检查浏览器缓存中有没有该域名解析IP地址，如有，则调用该 IP 完成解析，如果没有，就检查 DNS 解析器缓存，如果有直接返回 IP 完成解析（本地解析器缓存）
+  - 在 PC 首次成功访问某一个网站后，在一定时间内，浏览器或操作系统会缓存其 IP 地址（DNS解析记录），在 windows 下使用命令 `ipconfig /displaydns`查看
+- 如果本地的解析器缓存中没有找到对应的映射，则检查系统中 hosts 文件中的域名 IP 映射，如有则返回
+- 到域名服务器DNS进行解析域（多级）
 
 
 
