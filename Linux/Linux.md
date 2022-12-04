@@ -449,7 +449,44 @@ systemctl 常用的命令有：
 
 防火墙打开的同时打开某个端口：
 
-- 打开端口：`firewall-cmd --permanent --add-port=PORT_ID`
+- 打开端口：`firewall-cmd --permanent --add-port=PORT_ID/PROTO`（端口号/协议）
+  - 协议可以通过命令`netstat -anp`查看
+  - 例如：`firewall-cmd --permanent -add-prot=111/tcp`
+- 关闭某个端口：`firewall-cmd --permanent --remove-port=PORT__ID/PROTO`
+  - 例如：`firewall-cmd --permanent remove-port=111/tcp`
+- 重启后生效：`firewall-cmd --reload`
+- 查看端口是否开放：`firewall-cmd --query-port=PORT_ID`
+
+注意：
+
+- 打开或者关闭某个端口后，都要执行 reload 命令才会生效
+
+### 动态监控进程
+
+使用命令`top`，该命令与 ps 命令相似，但在执行一段时间后会更新正在运行的进程，主要参数有：
+
+- d：指定默认几秒后刷新（默认三秒）
+- i：不显示僵死进程（zombie）
+- p：监听指定的进程
+
+在 top 命令下可以使用交互命令：
+
+- P：按照 CPU 使用率排序（默认）
+- N：按照 PID 排序
+- M：按照内存使用率排序
+- q：退出
+- u：然后输入用户名 -- 监控特定用户的进程
+
+### 监控网络状态
+
+使用 netstat 命令，
+
+```
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+协议                 本地地址（Linux）        外部地址（客户端连接的IP地址）
+```
+
+
 
 ## 日志相关
 
