@@ -383,7 +383,15 @@ sudo rm /var/lib/dpkg/lock-frontend
 
 > https://www.dreams-true.com/lxqb/2250.html
 
+### 主机名修改
 
+使用 `hostname` 查看主机名，使用`vim /etc/hostname`打开的文件中修改
+
+### 配置主机名与 hosts 映射
+
+在 windows 下，找到`C:\Windows\System32\drivers\etc\hosts`文件，添加内容例如：`192.168.200.1 name`
+
+在 linux 下，打开：`vim /etc/hosts`在文件中添加同上内容，即可使用 ping 命令按照主机名测试通讯
 
 
 
