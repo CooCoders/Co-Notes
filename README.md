@@ -10,6 +10,7 @@
 - Ajax
 - Node.js
 - TypeScript
+- Linux
 - Vue (learning)
 - Java (learning)
 - Electron (learning~~)
