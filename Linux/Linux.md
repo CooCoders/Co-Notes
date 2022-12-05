@@ -559,11 +559,35 @@ Proto Recv-Q Send-Q Local Address           Foreign Address         State       
 
 ## shell
 
+shell 是一个命令行解释器，它为用户提供过了一个向 Linux 内核发送请求以便运行程序的界面系统级程序，用户可以用 shell 来启动、挂起、停止程序
 
+### 变量
 
+shell 变量分为系统变量和用户自定义变量：
 
+- 系统变量，例如 `$PATH, $HOME, $USER`等
+- 自定义变量
+- 显示当前 shell 中所有的变量 `set`
 
+在 shell 中定义变量：`a=xxx`（**注意 = 两侧不能有空格**），撤销变量为`unset var`，例如：
 
+```shell
+var1=100
+echo $var1
+# 不要加空格
+# 使用变量 在变量名前面加 $ 符号
+echo a=$var1
+echo "b=$var1"
+```
+
+注意变量一般约定使用大写字母，将命令返回值返回给变量：
+
+```sh
+b=`date`
+echo B=$b
+# 输出
+B=Mon Dec 5 11:56:00 CST 2022
+```
 
 
 
