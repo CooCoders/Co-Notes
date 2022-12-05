@@ -589,6 +589,16 @@ echo B=$b
 B=Mon Dec 5 11:56:00 CST 2022
 ```
 
+### 设置环境变量
+
+环境变量，即全局使用变量，例如在多个文件中都用得到的变量，可以添加到环境变量中，添加方法为：
+
+- 打开 /etc/profile 文件 `vim /etc/profile`，添加内容：`export TEST=/aa/ccc`
+- 刷新 profile：`source /etc/profile`
+- 然后使用`$TEST`即可 
+
+
+
 
 
 ## Q&A
