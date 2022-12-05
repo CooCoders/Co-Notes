@@ -488,7 +488,17 @@ Proto Recv-Q Send-Q Local Address           Foreign Address         State       
 
 ## 安装配置 JDK 案例
 
+安装流程：
 
+- 创建安装文件夹：`mkdir /opt/jdk`，用于保存 jdk 压缩包（一般都会将安装压缩包上传保存至 opt 目录下）
+- 上传 jdk 压缩包
+- 解压：`tar -zxvf jdk.xxxx.tar.gz`
+- 在个人文件夹下创建安装 jdk 的文件夹：`mkdir /usr/local/java`
+- 将解压后的文件移动到个人目录下：`mv jdkfile /usr/local/java`
+- 配置环境变量：`vim /etc/profile`
+  - 添加`export JAVA_HOME=/usr/local/java/jdkxxx`
+  - `export PATH=$JAVA_HOME/bin:$PATH`，注意后面要拼接上原来的 PATH，否则会破坏原有的环境变量
+- 刷新环境变量：`source /etc/profile`
 
 ## 日志相关
 
@@ -547,6 +557,8 @@ Proto Recv-Q Send-Q Local Address           Foreign Address         State       
 - 产生事件的服务名
 - 事件具体信息
 
+## shell
+
 
 
 
@@ -557,7 +569,7 @@ Proto Recv-Q Send-Q Local Address           Foreign Address         State       
 
 ## Q&A
 
-### 1. Linux 无法获得锁 /var/lib/dpkg/lock-frontend-open
+### Linux 无法获得锁 /var/lib/dpkg/lock-frontend-open
 
 出现这个问题是因为有其他的程序正在占用 apt-get 安装进程，可以手动杀死该进程：
 
@@ -565,7 +577,7 @@ Proto Recv-Q Send-Q Local Address           Foreign Address         State       
 sudo rm /var/lib/dpkg/lock-frontend
 ```
 
-## ssh无法连接本地虚拟机
+### ssh无法连接本地虚拟机
 
 有可能是虚拟机 ssh 服务端，解决方案参考：
 
