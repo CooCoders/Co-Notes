@@ -146,7 +146,7 @@ Linux 下一切皆文件
     - 使用`ls -l`打印详细信息的时候，文件大小显示不够直观，可以使用`ls -lh`将b单位转化为 M 等单位，方便直观查看大小
 - cd命令：切换到指定路径，`cd ~`回到当前用户的家目录，`cd ..`返回上层目录
 - `mkdir DIRNAME`：创建一级目录，可以使用`mkdir -p DIRNAME1/DIRNAME2`创建多级目录（多层目录同时创建）
-- `rmdir DIRNAME`：删除空目录，如文件夹非空，则使用`rm -rf DIRNAME`删除 （强制递归删除，危险操作）
+- `rm DIRNAME`：删除空目录，如文件夹非空，则使用`rm -rf DIRNAME`删除 （强制递归删除，危险操作）
 - `touch FILENAME`：创建空文件
 - cp 命令：
 
@@ -506,6 +506,54 @@ Proto Recv-Q Send-Q Local Address           Foreign Address         State       
 - message：记录系统重要消息的日志，如果系统出现问题，首要检查文件
 - secure：记录验证授权方面的信息，只要涉及账号密码就会被记录，例如系统登录，ssh登录，su切换用户
 - utmp：记录当前已经登陆的用户的信息，该文件会随着用户的登录和注销不断变化，使用特定命令 w、who、users进行查看
+
+### 日志服务
+
+日志管理服务 rsyslogd，日志管理服务按照指定配置文件保存日志，系统记录日志必须保证该服务运行：
+
+- 查询 rsyslogd 服务是否启动：`ps -aux | grep "rsyslog" | grep -v "grep"`
+- 查询 rsyslogdf 服务的自启动状态：`systemctl list-unit-files | grep rsyslog`
+
+日志服务配置文件`/etc/rsyslog.conf`
+
+该文件的格式为：`a.b`，其中 a 表示日志类型，b 代表日志级别，如`*.*`表示任何类型的日志以及任何级别都记录
+
+日志类型有：
+
+- authpriv：ssh、ftp等登录信息的验证i想你想
+- corn：时间任务相关
+- kern： 内核相关
+- mail：邮件相关
+- user：用户程序产生的相关信息
+
+日志级别有：
+
+- debug：有调试信息的
+- info：一般信息日志（最常用）
+- notice：具有重要性的普通条件的信息
+- warning：警告级别
+- err：错误级别，某个功能和或者模块不能正常工作
+- crit：严重级别，阻止系统或者软件不能正常工作
+- alert：需要立刻修改
+- emerg：内核崩溃信息
+- none：不记录
+
+上述日志级别由低到高，记录的信息越来越少，例如`mail.info`表示记录邮件相关的 info 级别的日志信息
+
+由 rsyslogd 记录的日志信息内容包括四部分：
+
+- 事件事件
+- 产生事件的服务器主机名
+- 产生事件的服务名
+- 事件具体信息
+
+
+
+
+
+
+
+
 
 ## Q&A
 
