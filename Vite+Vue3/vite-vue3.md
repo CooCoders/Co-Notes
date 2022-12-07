@@ -194,15 +194,104 @@ const add = () => {
 
 ### 模板语法
 
-例如插值表达式等使用，同 vue2，例如：
+### 内容渲染指令
+
+#### 插值表达式
+
+插值表达式，这部分与 vue2 的语法相同，例如：
 
 ```vue
-<p>this is a test count {{ count }}</p>
-<div v-html="hContent"></div>
-<p v-bind:title="textTips">some texts</p>
+<p>this is a test count {{ count }}</p> 
+
+<!-- 此时显示的结果为 1 -->
+<p>Number: {{ count + 1 }}</p>
 
 const count = ref(0)
+```
+
+插值表达式中也可以进行简单的逻辑运算，例如：
+
+```vue
+<p>{{ count == 0 ? 'Yes' : 'No' }}</p>
+```
+
+`v-html`可以渲染 html 内容，例如：
+
+```vue
+<div v-html="hContent"></div>
+
 const hContent = ref('<h3>Test h3 title</h3>')
+```
+
+此时 div 的内容以 h3 元素呈现
+
+#### 属性绑定指令
+
+通过属性绑定指令`v-bind`为标签元素属性动态赋值，例如：
+
+```vue
+<p v-bind:title="textTips">some texts</p>
+<input type="text" v-bind:placeholder="notionText" />
+
 const textTips = ref('this is a p label')
+const notionText = ref('some texts')
+```
+
+可以使用`v-bind`为标签同时绑定多个属性，例如：
+
+```vue
+<div v-bind="propObj">div</div>
+
+const propObj = ref({
+  id: 1,
+  name: 'test',
+})
+```
+
+此时在浏览器中可以看到 div 元素增加了 id 和 name 属性
+
+v-if 指令：通过 v-if 指令可以动态显示/隐藏元素，例如：
+
+```vue
+<button @click="chgShow">show</button>
+<div class="test" v-if="isShow"></div>
+
+const chgShow = () => {
+  isShow.value = !isShow.value
+}
+```
+
+此时点击按钮改变 isShow 的值， div 也会随之改变状态
+
+#### 事件绑定指令
+
+通过 `v-on`指令为元素绑定事件（也可以简写为`@`），例如：
+
+```vue
+<button v-on:click="add">add</button>
+<p>Number: {{ count }}</p>
+
+const add = () => {
+  count.value += 1
+}
+```
+
+例子：监听输入框内容并进行输出
+
+```vue
+<input type="text" @:keyup="handleKeyUp" />
+<p>input content:{{ inputContent }}</p>
+
+// 使用事件对象e获取触发对象
+const handleKeyUp = (e) => {
+  inputContent.value = e.target.value
+}
+```
+
+`v-on`指令的完整格式为：
+
+```
+v-on:submit.prevent="onSubmit"
+v-on:参数.修饰符=事件触发函数
 ```
 
