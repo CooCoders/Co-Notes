@@ -225,7 +225,7 @@ const hContent = ref('<h3>Test h3 title</h3>')
 
 此时 div 的内容以 h3 元素呈现
 
-#### 属性绑定指令
+### 属性绑定指令
 
 通过属性绑定指令`v-bind`为标签元素属性动态赋值，例如：
 
@@ -263,7 +263,7 @@ const chgShow = () => {
 
 此时点击按钮改变 isShow 的值， div 也会随之改变状态
 
-#### 事件绑定指令
+### 事件绑定指令
 
 通过 `v-on`指令为元素绑定事件（也可以简写为`@`），例如：
 
@@ -294,4 +294,33 @@ const handleKeyUp = (e) => {
 v-on:submit.prevent="onSubmit"
 v-on:参数.修饰符=事件触发函数
 ```
+
+### 响应式
+
+通过 ref 和 reactive 都可以实现响应式数据
+
+通过 ref 方式：
+
+```vue
+<button @click="add2">{{ count }}</button>
+
+const count = ref(0)
+const add2 = () => {
+  count.value += 2
+}
+```
+
+通过 reactive 方式：
+
+```vue
+<button @click="add">{{ state.count }}</button>
+
+// reactive 需要定义为对象形式
+const state = reactive({ count: 5 })
+const add = () => {
+  state.count++
+}
+```
+
+### 计算属性
 
