@@ -352,7 +352,19 @@ const add = () => {
 }
 ```
 
+### 双向数据绑定指令
 
+使用`v-bind:value`只能由数据源向页面渲染，在页面修改的数据无法影响数据源，此时可以使用`v-model`指令，该指令可以用于 input、textare 以及 select 元素，例如：
+
+```vue
+<input type="text" v-model.number="val1" />
+
+const val1 = ref(150)
+```
+
+此时 val1 与 input 输入框中的数据同步，一方修改，另一方也会修改，`.number`表示将输入的数据自动转化为数字类型，类似的修饰符还有`lazy`，表示全部输入完后再修改数据，`.trim`自动去除前后空白字符
 
 ### 计算属性
+
+
 
