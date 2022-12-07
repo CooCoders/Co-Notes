@@ -295,6 +295,36 @@ v-on:submit.prevent="onSubmit"
 v-on:参数.修饰符=事件触发函数
 ```
 
+### 修饰符
+
+例如处理冒泡事件：
+
+```vue
+<div class="bubble-test" @click="alertDiv">
+    <button @click="alertBtn">test</button>
+</div>
+```
+
+此时由于冒泡机制，点击按钮时候会先后触发按钮和 div 的点击事件，如需要阻止冒泡，可以添加 stop 修饰符：
+
+```vue
+<button @click.stop="alertBtn">test</button>
+```
+
+其他常见的事件修饰符还有 prevent（阻止默认事件，例如表单提交等）以及 once（设置绑定的事件只执行一次），常用的案件修饰符有 enter 和 esc ，表示监听到按下 enter 和 esc 键的时候触发，例如：
+
+```vue
+<input type="text" @keyup.esc="clear" />
+
+const clear = (e) => {
+  e.target.value = ''
+}
+```
+
+修饰符与 vue2 相同，	具体解释见 vue2 的笔记
+
+
+
 ### 响应式
 
 通过 ref 和 reactive 都可以实现响应式数据
@@ -321,6 +351,8 @@ const add = () => {
   state.count++
 }
 ```
+
+
 
 ### 计算属性
 
