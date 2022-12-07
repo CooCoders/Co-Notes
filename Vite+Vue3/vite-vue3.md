@@ -190,6 +190,19 @@ const add = () => {
 
 
 
+## Vue3 
+
 ### 模板语法
 
-插值表达式：`{{}}`
+例如插值表达式等使用，同 vue2，例如：
+
+```vue
+<p>this is a test count {{ count }}</p>
+<div v-html="hContent"></div>
+<p v-bind:title="textTips">some texts</p>
+
+const count = ref(0)
+const hContent = ref('<h3>Test h3 title</h3>')
+const textTips = ref('this is a p label')
+```
+
