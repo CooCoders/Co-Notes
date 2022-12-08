@@ -30,7 +30,7 @@ Vite 对上述两个问题进行了改进
 - Chinese - 语言插件
 - Live Server - 在本地开启 server
 - Monokai Pro - 编辑器皮肤
-- Vetur - Vue 构建辅助工具
+- Vetur - Vue 构建辅助工具（注意如使用 vue3， 需卸载此插件并安装 Volar）
 
 编程字体： Fira Code
 
@@ -295,6 +295,24 @@ v-on:submit.prevent="onSubmit"
 v-on:参数.修饰符=事件触发函数
 ```
 
+`v-on:input`用于文本框输入
+
+vue3 也支持为一个事件绑定多个处理函数，例如：
+
+```vue
+<button @click="print1(), print2()">cli</button>
+
+const print1 = () => {
+  console.log('11111')
+}
+
+const print2 = () => {
+  console.log('22222')
+}
+```
+
+
+
 ### 修饰符
 
 例如处理冒泡事件：
@@ -443,13 +461,54 @@ const chgIndex = (ind) => {
 
 ###  条件渲染
 
+`v-if`指令以及配套的`v-else-if`，`v-else`可以实现按一定条件渲染页面，例如，按照不同分数输出对应的字符：
 
+```vue
+<p>
+    <span v-if="point <= 3">A</span>
+    <span v-else-if="point <= 6">B</span>
+    <span v-else>C</span>
+</p>
+```
 
+如果需要多个元素同时由一个变量决定是否显示，可以使用临时标签 `<template>`包裹，例如：
 
+```vue
+<template v-if="tag">
+	<p>pppp1</p>
+	<p>pppp2</p>
+</template>
+```
 
+### 列表渲染
 
+使用`v-for`进行列表渲染，例如：
 
+```vue
+<ul>
+    <!-- 注意三个形参的顺序是 value 、key、 index -->
+    <li v-for="(v, k, i) in bookList[0]">{{ i }}--{{ k }}--{{ v }}</li>
+</ul>
 
+<ul>
+    <li v-for="item in bookList">
+        {{ item.bookname }}--{{ item.author }}--{{ item.date }}
+    </li>
+</ul>
+
+const bookList = reactive([
+  {
+    bookname: 'xiyouji',
+    author: 'wu',
+    date: '1900',
+  },
+  {
+    bookname: 'shuihuzhuan',
+    author: 'shi',
+    date: '1900',
+  },
+])
+```
 
 
 
