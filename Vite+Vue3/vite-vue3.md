@@ -378,3 +378,76 @@ const dcount = computed(() => {
 ```
 
 使用计算属性可以复用计算，虽然使用函数的方式也可以实现计算属性的功能，但是使用函数的方式，会随着页面渲染而重复执行（例如某个数据改变引起页面渲染），重复的无意义的计算会消耗资源，而计算属性方式定义的结果不会重复计算（计算属性会根据数据变化进行缓存，如没有变化，则不会重复计算）
+
+### class 和 style 的动态绑定
+
+元素可以通过`v-bind:class=""`或者`:class=""`实现动态改变样式，例如：
+
+```vue
+<!-- class 如果有多个样式设置需写成列表形式
+     通过改变 tag 为 true 或者 false 控制 chgColor 样式是否表示-->
+<!-- style 需要按照以键值对的形式写成小驼峰形式 -->
+<p :style="{ textDecoration: ul }" :class="[chgFont, { chgColor: tag }]">
+    
+const chgFont = ref('chg-fontsize')
+const ul = ref('underline')
+
+.chgColor {
+   color: red;
+}
+
+.chg-fontsize {
+   font-size: 20px;
+}
+```
+
+使用案例：实现一个列表，点击列表项后当前列表项高亮显示：
+
+```vue
+<template>
+  <div>
+    <ul>
+      <li
+        v-for="item in usrList"
+        :class="{ active: item.id === curInd }"
+        @click="chgIndex(item.id)"
+        :key="item.id"
+      >
+        {{ item.name }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive } from 'vue'
+const usrList = ref([
+  { name: 'zs', id: 1 },
+  { name: 'ls', id: 2 },
+  { name: 'ww', id: 3 },
+])
+const curInd = ref(1)
+
+const chgIndex = (ind) => {
+  curInd.value = ind
+}
+</script>
+<style scoped>
+.active {
+  background-color: steelblue;
+}
+</style>
+```
+
+（这里有个问题，如果动态决定某个样式类是否展示，那么该样式名就无法使用`-`，例如`chg-color`，此时会报错）
+
+
+
+
+
+
+
+
+
+
+
