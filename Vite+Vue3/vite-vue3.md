@@ -382,6 +382,50 @@ const val1 = ref(150)
 
 此时 val1 与 input 输入框中的数据同步，一方修改，另一方也会修改，`.number`表示将输入的数据自动转化为数字类型，类似的修饰符还有`lazy`，表示全部输入完后再修改数据，`.trim`自动去除前后空白字符
 
+`v-model`指令常用于文本输入框（text、textarea）以及单选按钮和下拉列表中，例如：
+
+```vue
+<!-- 所有radio同时绑定到一个变量 picked 上 此时实现的是单选 -->
+<div>
+    {{ picked }}
+    <input type="radio" value="One" v-model="picked" /> One
+    <input type="radio" value="Two" v-model="picked" /> Two
+    <input type="radio" value="Three" v-model="picked" /> Three
+</div>
+
+const picked = ref('One')
+```
+
+
+
+```vue
+<div>
+    {{ selected }}
+    <input type="checkbox" value="one" v-model="selected" /> one
+    <input type="checkbox" value="two" v-model="selected" /> two
+    <input type="checkbox" value="three" v-model="selected" /> three
+</div>
+
+// 多选形式
+const selected = ref([])
+```
+
+下拉列表：
+
+```vue
+{{ selectedVal }}
+<select v-model="selectedVal">
+    <!-- value 也可以不写 此时选择的值就是文本 -->
+    <option value="0">beijign</option>
+    <option>nanjing</option>
+    <option>dongjing</option>
+</select>
+
+const selectedVal = ref()
+```
+
+
+
 ### 计算属性
 
 计算属性用于通过一系列计算，得到的一个属性值，例如组件中有一个 count，现在需要对 count 做一些计算得到 newCount，此时可以通过计算属性得到，定义格式例如：
