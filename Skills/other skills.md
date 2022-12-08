@@ -9,3 +9,9 @@ Google font 提供了大量英文字体样式（网址：[Browse Fonts](https://
 ```
 
 在 css 文件中通过如上代码导入即可使用 La Belle Aurore 字体
+
+
+
+## 实现输入换行
+
+使用 css 样式：`white-space: pre-line`，此时输入换行的时候也会被记录
