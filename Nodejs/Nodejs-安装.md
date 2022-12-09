@@ -32,6 +32,18 @@ npm config set prefix "C:\Program1\Nodejs\node_global"
 npm config set cache "C:\Program1\Nodejs\node_cache"
 ```
 
+查看npm全局模块的存放路径：
+
+```
+npm get prefix
+```
+
+查看npm缓存默认存放路径：
+
+```
+npm get cache
+```
+
 
 
 ### 改变下载源
@@ -93,6 +105,8 @@ https://blog.csdn.net/m0_59562614/article/details/125464108
 ```
 将安全信息应用到以下对象时发生错误，拒绝访问
 ```
+
+此时有可能是手动创建的 `node_global` 和 `node_cache`文件夹的权限设置问题，分别对这两个文件右键->属性->高级->编辑->找到“完全控制”选项并勾选，然后修改整个 node 文件夹的权限即可
 
 参考博客解决：
 
