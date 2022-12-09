@@ -596,7 +596,6 @@ watchEffect 例如：
 watch(count, () => {
    console.log('new count', count.value)
 })
-
 watch(
   () => {
 // return value
@@ -647,3 +646,63 @@ app.mount('#app')
 经全局注册的组件在项目任何组件内都无需再导入，直接使用即可
 
 局部组件在需要使用的组件内使用`import xxxx from xxx`语法导入
+
+### 组件信息传递
+
+#### 父组件 -> 子组件
+
+首先在父组件中使用子组件的标签中自定义属性：
+
+```vue
+// count 保存要传递的数据
+<Child1Vue :cou="count"></Child1Vue>
+```
+
+随后在子组件中获取、使用该自定义属性值：
+
+```vue
+<template>
+  <div class="main1">
+    <!-- 使用 -->
+    <p>Child component 1 --- {{ cou }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive } from 'vue'
+// 以数组形式接收属性值
+defineProps(['cou'])
+</script>
+```
+
+另一种接收形式：
+
+```vue
+<template>
+  <div class="main2">
+    <p>Child component 2 -- {{ receives.cou }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive } from 'vue'
+const receives = defineProps(['cou'])
+</script>
+```
+
+
+
+#### 子组件 -> 父组件
+
+
+
+
+
+
+
+
+
+
+
+
+
