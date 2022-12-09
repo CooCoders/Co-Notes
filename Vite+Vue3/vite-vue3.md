@@ -192,7 +192,10 @@ const add = () => {
 
 ## Vue3 
 
-### 模板语法
+### 一些概念
+
+- 语法糖：Syntactic Suger，就是在不改变程序运行结果的前提下，对代码的写法进行改变，提高代码的可读性，类如汉语的成语
+- vue3 setup script：用于简化写法的 vue3 语法糖，添加 setup 的 script 标签会自动将所有的顶级变量和函数暴露给 template 使用，无需手动引入组件以及 export default
 
 ### 内容渲染指令
 
@@ -554,5 +557,25 @@ const bookList = reactive([
 ])
 ```
 
+### 生命周期
 
+需求场景：两秒之后输出一个字符
+
+该需求可以通过 setTimeout 函数实现，但实际开发中不推荐使用此方法，因为每次页面渲染都会申请内存，最终可能会导致内存溢出，此外在获取页面数据的时候由于页面渲染的事件不确定，可能会造成一些错误
+
+生命周期函数是 vue 框架内置的一些函数，并伴随着组件的生命周期自动执行，这部分与 vue2 相同，使用方法例如：
+
+```vue
+import { onMounted, onBeforeMount } from 'vue'
+
+// 后执行
+onMounted(() => {
+  console.log('mounted')
+})
+
+// 先执行
+onBeforeMount(() => {
+  console.log('before mounted')
+})
+```
 
