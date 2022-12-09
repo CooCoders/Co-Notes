@@ -617,3 +617,33 @@ watchEffect(() => {
 })
 ```
 
+### 组件注册
+
+组件允许我们将页面 UI 划分为独立可复用的部分，组件在应用程序中经常被组织为层层嵌套的树状结构：
+
+```
+Root - Header
+     - Main - Content1
+            - Content2
+     - Aside - Item1
+             - Item2
+             - Item3
+```
+
+全局组件在 `main.js`文件中引入：
+
+```js
+import GlobalComp from './components/GlobalComp.vue'
+
+// createApp(App).mount('#app')
+const app = createApp(App)
+// 注册全局组件
+// 第一个参数是组件使用名称
+// 第二个参数是组件导入名称
+app.component('GC', GlobalComp)
+app.mount('#app')
+```
+
+经全局注册的组件在项目任何组件内都无需再导入，直接使用即可
+
+局部组件在需要使用的组件内使用`import xxxx from xxx`语法导入
