@@ -579,3 +579,41 @@ onBeforeMount(() => {
 })
 ```
 
+### 侦听器
+
+侦听器功能与 vue2 相同，在数据发生变化的时候执行，可以使用的钩子有两个`watchEffect`和`watch`：
+
+- watch：之追踪具体的数据源，只有在数据源发生变化的时候才会触发回调（如果某个数据值被操作但未发生值的变化也不会触发），用于更精确地控制回调函数的触发
+- watchEffect：自动追踪所有的的数据变化（注意必须要引用一个变化数据才会执行）
+
+watchEffect 例如：
+
+```vue
+<p>{{ count }}</p>
+<button @click="add">Add</button>
+
+// 第一个参数也可以写成函数形式只要最终返回要监听的数据即可
+watch(count, () => {
+   console.log('new count', count.value)
+})
+
+watch(
+  () => {
+// return value
+    return count.value
+  },
+  () => {
+    console.log('count: ', count.value)
+  }
+)
+```
+
+watch 例如：
+
+```vue
+watchEffect(() => {
+  // 必须至少引用一个数据变化才会执行回调
+  console.log(count.value)
+})
+```
+
