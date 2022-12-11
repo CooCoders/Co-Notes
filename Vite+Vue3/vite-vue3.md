@@ -694,11 +694,29 @@ const receives = defineProps(['cou'])
 
 #### 子组件 -> 父组件
 
+子组件向父组件传递数据使用自定义事件，首先在父组件中定义自定义事件：
 
+```vue
+<Child1Vue :cou="count" @ch1-event="handleCh1"></Child1Vue>
+```
 
+然后在父组件中定义接收函数：
 
+```vue
+const handleCh2 = (msg) => {
+  // console.log(msg.value)
+  ch2val.value = msg.value
+}
+```
 
+子组件中定义 emit：
 
+```
+const emit = defineEmits(['ch1-event'])
+ 
+ // 发送位置
+ emit('ch1-event', count)
+```
 
 
 
