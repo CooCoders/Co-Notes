@@ -720,9 +720,25 @@ const emit = defineEmits(['ch1-event'])
 
 ### 事件
 
-简化子组件向父组件传值的过程：
+简化子组件向父组件传值的过程：使用`v-model`指令
 
+首先父组件中定义：
 
+```
+<Child1Vue v-model:sendVal="chVal"></Child1Vue>
+```
+
+与使用自定义方法传值一样，v-model指令后面`sendVal`用于子组件中，`chVal`在父组件中接收子组件传来的值（**注意这里的 chVal 必须在父组件中已经定义并使用**，否则无法显示）
+
+随后子组件中定义传值的方法：
+
+```
+// 固定格式写法: update:xxxx
+const emit = defineEmits(['update:sendVal'])
+
+// 这里传递的为值 而非引用
+emit('update:sendVal', val.value)
+```
 
 
 
