@@ -718,6 +718,22 @@ const emit = defineEmits(['ch1-event'])
  emit('ch1-event', count)
 ```
 
+### 事件
+
+简化子组件向父组件传值的过程：
+
+
+
+
+
+
+
+
+
+
+
+### 穿透 attribute
+
 
 
 
