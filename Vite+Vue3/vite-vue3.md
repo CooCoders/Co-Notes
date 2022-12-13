@@ -819,3 +819,29 @@ console.log(attrs.class)
 </template>
 ```
 
+### 依赖注入
+
+依赖注入是另一种传递数据的方法，可以方便的由父组件向后代组件传值
+
+Provider 组件（父组件）：
+
+```vue
+<script>
+    import { provide } from 'vue'
+
+    const text = ref('original texts')
+    provide('txt', text)
+</script>
+```
+
+Injector 组件（后代组件）：
+
+```vue
+<script>
+    import { ref, reactive, inject } from 'vue'
+
+    // 名称要与 provider 组件中提供的名称相同
+    const text = inject('txt')
+</script>
+```
+
