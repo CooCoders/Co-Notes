@@ -766,3 +766,12 @@ const attrs = useAttrs()
 console.log(attrs.class)
 ```
 
+### 插槽 slot
+
+在使用子组件时，像 h5 标签一样传入内容，`<Comp>ABCD</Comp>`，此时在子组件中添加`<slot></slot>`标签，会将内容`ABCD`渲染到子组件上
+
+#### 具名插槽
+
+
+
+#### 作用域插槽
