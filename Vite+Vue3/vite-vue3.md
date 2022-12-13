@@ -740,19 +740,29 @@ const emit = defineEmits(['update:sendVal'])
 emit('update:sendVal', val.value)
 ```
 
+### 透传 fallthrough attribute
 
+在 vue3 中，class 被看作是普通属性，在父组件中，使用子组件时候传入的 class 或者自定义属性都会默认挂在子组件的根 div 上，例如：
 
+```vue
+<ChildVue class="a" title="test"></ChildVue>
+```
 
+此时子组件中，顶层的 div 自动会带 class 和 tile 属性，如果要关闭这一功能，可以在子组件上设置：
 
+```vue
+<script>
+export default {
+  inheritAttrs: false,
+}
+</script>
+```
 
+使用 useAttrs 钩子可以调用这些属性：
 
-
-
-### 穿透 attribute
-
-
-
-
-
-
+```vue
+import { ref, reactive, useAttrs } from 'vue'
+const attrs = useAttrs()
+console.log(attrs.class)
+```
 
