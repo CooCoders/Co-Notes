@@ -772,6 +772,50 @@ console.log(attrs.class)
 
 #### 具名插槽
 
+**用于子组件渲染父组件的内容**
 
+在父组件中，定义：
+
+```vue
+<template v-slot:text2>
+	<div>text2 from parent</div>
+</template>
+```
+
+注意这里必须要使用`template`标签包裹，否则报错，`v-slot:text2`制定了 slot 的名称，在子组件中使用：
+
+```vue
+<slot name="text2"></slot>
+```
+
+即可渲染出对应的父组件的内容，`v-slot`指令也可以简写为`#`
+
+此外，在子组件中，可以向 slot 中添加内容，`<slot>somt text from child</slot>`，如果没有从父组件中获取到数据，就会显示该内容
 
 #### 作用域插槽
+
+**用于父组件渲染子组件的内容**
+
+在子组件中定义：
+
+```vue
+<slot :mark="mark1" :mark2="mark2"></slot>
+```
+
+在父组件中使用：
+
+```vue
+<template v-slot:default="data">
+	<p>{{ data.mark }} --- {{ data.mark2 }}</p>
+</template>
+```
+
+也可以使用解构赋值的方式获得从子组件中传入的内容：
+
+```vue
+<template v-slot:default="{ mark, mark2 }">
+	<!-- mark, mark2 分别对应子组件中定义的 :mark :mark2 -->
+	<p>{{ mark }} --- {{ mark2 }}</p>
+</template>
+```
+
