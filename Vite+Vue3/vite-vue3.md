@@ -1127,6 +1127,28 @@ const counterStore = useCounterStore()
 
 #### 在不同组件中使用同一状态
 
+在其他组件中使用同一状态或者对其进行改变用法相同：
+
+```vue
+<template>
+  <div class="left-container">
+    <h3>Left component</h3>
+    <p>Count: {{ counterStore.count }}</p>
+    <button @click="counterStore.add()">add</button>
+    <button @click="counterStore.sub()">sub</button>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive } from 'vue'
+    
+import useCounterStore from '@/store/counterStore.js'
+const counterStore = useCounterStore()
+</script>
+<style scoped></style>
+
+```
+
 
 
 ### 在 vue3 配置文件中配置路径
