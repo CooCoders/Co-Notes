@@ -979,13 +979,69 @@ app.directive('focus', myDirective)
 
 ### 路由插件
 
+安装插件：`npm i vue-router`
 
+首先创建子组件，例如 Left.vue 和 Right.vue，创建路由配置文件`router.js`：
 
+```js
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+// 导入路由所需的组件
+import Left from './Left.vue'
+import Right from './Right.vue'
 
+// 定义路由规则
+const routes = [
+  // 第一条路由 地址/指向根页面（不跳转）
+  {
+    path: '/',
+    redirect: ''
+  },
+  // 第二条路由 地址/left指向 left 组件页面
+  {
+    path: '/left',
+    component: Left
+  },
+  // 第三条路由 地址/right指向 right 组件页面
+  {
+    path: '/right',
+    component: Right
+  }
+]
+// 创建路由
+const router = createRouter({
+  routes,
+  history: createWebHistory()
+})
 
+export default router
+```
 
+在`main.js`中注册路由文件：
 
+```js
+import router from './components/routers/router'
 
+const app = createApp(App)
+app.use(router)
+```
+
+在主页面中写导航链接：
+
+```vue
+<template>
+  <div class="inside">
+    <p>some text</p>
+    <!-- router-link 用于指定跳转链接 to 指定跳转的目标地址 -->
+    <router-link to="/">Main page</router-link>&nbsp;
+    <router-link to="/left">LEFT</router-link>&nbsp;
+    <router-link to="/right">RIGHT</router-link>
+    <!-- router-view 相当于占位 跳转之后的页面内容展示在这里 -->
+    <div>
+      <router-view></router-view>
+    </div>
+  </div>
+</template>
+```
 
 
 
