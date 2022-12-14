@@ -806,7 +806,7 @@ console.log(attrs.class)
 
 ```vue
 <template v-slot:default="data">
-	<p>{{ data.mark }} --- {{ data.mark2 }}</p>
+	<p>{{ data.mark }} -	-- {{ data.mark2 }}</p>
 </template>
 ```
 
@@ -845,3 +845,101 @@ Injector 组件（后代组件）：
 </script>
 ```
 
+### 组合式函数 composition function
+
+为了方便功能拆分，可以按照不同的操作对象对文件进行拆分，例如，现有功能场景：页面有一个计数器，点击按钮计数器加一，同时，页面的标题也随之变为当前的计数器值
+
+此需求可以在单 vue 文件中实现：
+
+```vue
+<template>
+  <div>
+    <p>Count: {{ count }}</p>
+    <button @click="add">add</button>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive, onMounted, onUpdated } from 'vue'
+
+// 页面 count 管理
+const count = ref(0)
+const add = () => {
+  count.value++
+}
+
+// title 相关功能
+onMounted(() => {
+  document.title = count.value
+})
+
+onUpdated(() => {
+  document.title = count.value
+})
+</script>
+<style scoped></style>
+```
+
+上述文件中有两个操作对象：count 与 document.title，因此可以将这两部分代码剥离出来，形成两个文件：
+
+`useCount.js`文件，用于处理 count 相关的逻辑：
+
+```js
+import ref from 'vue'
+const useCount = () => {
+  const count = ref(0)
+  const add = () => {
+    count.value++
+  }
+
+  // 主文件中需要用到 count 和 add 函数
+  return {
+    count,
+    add
+  }
+}
+// 向外默认导出
+export default useCount
+```
+
+`useTitle.js`文件，用于处理 title 相关的逻辑：
+
+```js
+import { onMounted, onUpdated } from "vue"
+// 注意此文件中需要用到 count 值 所以作为参数传入
+const useTitle = (count) => {
+  onMounted(() => {
+    document.title = count.value
+  })
+
+  onUpdated(() => {
+    document.title = count.value
+  })
+}
+export default useTitle
+```
+
+原始的 vue 文件可以简化为：
+
+```vue
+<template>
+  <div>
+    <p>Count: {{ count }}</p>
+    <button @click="add">add</button>
+  </div>
+</template>
+
+<script setup>
+// 导入两个文件
+import useCount from './useCount'
+import useTitle from './useTitle'
+
+// 解构出 count 和 add 函数
+const { count, add } = useCount()
+// 传入 count 
+useTitle(count)
+</script>
+<style scoped></style>
+```
+
+通过对模块进行拆分，实现对于文件的简化，同时可以忽略已经实现的模块文件的内容，只关注自己的目标即可
