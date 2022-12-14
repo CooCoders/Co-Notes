@@ -196,6 +196,7 @@ const add = () => {
 
 - 语法糖：Syntactic Suger，就是在不改变程序运行结果的前提下，对代码的写法进行改变，提高代码的可读性，类如汉语的成语
 - vue3 setup script：用于简化写法的 vue3 语法糖，添加 setup 的 script 标签会自动将所有的顶级变量和函数暴露给 template 使用，无需手动引入组件以及 export default
+- 钩子：
 
 ### 内容渲染指令
 
@@ -819,7 +820,7 @@ console.log(attrs.class)
 </template>
 ```
 
-### 依赖注入
+### 依赖注入 inject
 
 依赖注入是另一种传递数据的方法，可以方便的由父组件向后代组件传值
 
@@ -943,3 +944,52 @@ useTitle(count)
 ```
 
 通过对模块进行拆分，实现对于文件的简化，同时可以忽略已经实现的模块文件的内容，只关注自己的目标即可
+
+### 自定义指令 Custom Directive
+
+vue 允许注册自定义的指令，例如，实现一个指令，用于自动聚焦：
+
+自定义指令对象：`myDirective.js`文件：
+
+```js
+const myDirective = {
+  mounted(el) {
+    el.focus()
+  }
+}
+
+export default myDirective
+```
+
+在 `main.js`文件中注册该自定义指令：
+
+```js
+import myDirective from './components/customize-directives/myDirective'
+
+app.directive('focus', myDirective)
+```
+
+使用：
+
+```vue
+<input type="text" v-focus />
+```
+
+注意定义的指令名为`focus`，但是实际使用为`v-focus`
+
+### 路由插件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
