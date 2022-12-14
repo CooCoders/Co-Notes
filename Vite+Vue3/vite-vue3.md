@@ -788,7 +788,7 @@ console.log(attrs.class)
 <slot name="text2"></slot>
 ```
 
-即可渲染出对应的父组件的内容，`v-slot`指令也可以简写为`#`
+即可渲染出对应的父组件的内容，`v-slot`指令也可以简写为`#`，并且在父组件中定义的样式也会被渲染到子组件中
 
 此外，在子组件中，可以向 slot 中添加内容，`<slot>somt text from child</slot>`，如果没有从父组件中获取到数据，就会显示该内容
 
