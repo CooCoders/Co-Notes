@@ -1043,9 +1043,111 @@ app.use(router)
 </template>
 ```
 
+### Pinia
+
+Pinia 是 Vue 的存储库，借助 Pinia 可以实现跨组件共享状态，其使用方法如下：
+
+首先安装 Pinia：
+
+```
+npm i pinia -S
+```
+
+其次在 `main.js`中注册 pinia：
+
+```js
+import { createPinia } from 'pinia'
+
+const app = createApp(App)
+const pinia = createPinia()
+app.use(pinia)
+// 或者写为 app.use(createPinia())
+app.mount('#app')
+```
+
+定义数据储存文件 `counterStore.js`：
+
+```js
+import { defineStore } from 'pinia'
+
+const useCounterStore = defineStore('counterStore', {
+  state() {
+    return {
+      count: 0
+    }
+  }
+})
+
+export default useCounterStore
+```
+
+在组件中使用：
+
+```vue
+<!-- Pinia 测试 主页面 -->
+<template>
+  <div class="main-container">
+    <h3>Main page</h3>
+    <p>Count: {{ counterStore.count }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive } from 'vue'
+// 导入
+import useCounterStore from '../../store/counterStore.js'
+
+const counterStore = useCounterStore()
+</script>
+<style></style>
+
+```
+
+此时可以看到页面中显示 count 值
+
+如果想要通过方法控制 count 的值，需要在 actions 节点中定义，在`counterStore.js`文件中增加：
+
+```
+  actions: {
+    add() {
+      this.count++
+    },
+    sub() {
+      this.count--
+    }
+  }
+```
+
+同样，在`Main.vue`中调用：
+
+```vue
+<button @click="counterStore.add()">add</button>
+<button @click="counterStore.sub()">sub</button>
+```
+
+#### 在不同组件中使用同一状态
 
 
 
+### 在 vue3 配置文件中配置路径
 
+导入 vue 组件的时候，可能会由于目录的层级关系出现多个`../../`，可以在`vite.config.js`配置文件中对路径进行设置：
 
+```js
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import path from 'path'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  }
+})
+```
+
+此时`@`即表示从`vite.config.js`文件同级目录下的`src`目录开始算起
 
