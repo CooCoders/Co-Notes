@@ -1161,6 +1161,124 @@ const { products } = storeToRefs(pstorage)
 
 注意解构赋值只能用于变量（状态），方法无法得到
 
+#### 案例：实现购物车基本功能
+
+**准备数据：**
+
+将数据构建为 json 格式文件 `api.json`：
+
+```json
+{
+  "data":[
+    {
+      "id": 1,
+      "name": "Good1",
+      "price": 2000,
+      "inventory": 3
+    },
+    {
+      "id": 2,
+      "name": "Good2",
+      "price": 3000,
+      "inventory": 3
+    },
+    {
+      "id": 3,
+      "name": "Good3",
+      "price": 40000,
+      "inventory": 2
+    }
+  ]
+}
+```
+
+这里模拟从服务器接口中获取数据，为了更方便的测试前端页面，数据接口可以借助 json-server 工具实现，安装以及使用如下：
+
+- 全局安装 json-server:
+
+  ```
+  npm i json-server -g
+  ```
+
+- 按照如下格式启动一个node服务器，并提供数据接口：
+
+  ```
+  json-server .\src\components\pinia\data\api.json -p 9000
+  ```
+
+  需要提供的是数据的 json 文件，并为这个接口服务指定一个端口，此时 json-server 工具会生成一个链接：
+
+  ```
+    Resources
+    http://localhost:9000/data
+  ```
+
+  打开该链接可以看到数据内容，注意使用 json-server 工具要新开启一个终端，并且在使用时保持其运行，上述链接即为模拟数据的接口
+
+- 除了模拟从服务器接口中请求数据，json-server 也可以模拟向服务器发送数据，例如：
+
+  ```js
+  axios.post('http://localhost:9000/data', {
+      id: 4,
+      name: "Good4"
+  })
+  ```
+
+  表示向 data 接口传入指定对象数据
+
+为了模拟真实场景下获取数据，需要借助 Ajax 请求数据，在 vue 中，常使用其封装 Axios，首先安装 axios：
+
+```
+npm i axios -S
+```
+
+**创建商品store文件**
+
+由于要保存商品数据，因此在 state() 下创建 `products`数组，该数组为空数组：
+
+```js
+const useProductStore = defineStore('productStore', {
+  state() {
+    return {
+      products: []
+    }
+  },
+})
+```
+
+在页面加载期间， products 数据应请求服务器并返回，请求数据是一个异步过程，这里使用 async-await 函数获取数据，并定义在 action 节点的 loadData 函数下：
+
+```js
+actions: {
+    async loadData() {
+        let results = await axios.get('http://localhost:9000/data')
+        this.products = results.data
+    }
+}
+```
+
+最后将返回的数据同步到 products 状态中
+
+在 `product.vue` 页面中使用 products 状态进行填充，注意页面加载数据应该在 onMounted 期间进行：
+
+```js
+onMounted(() => {
+  pstorage.loadData()
+})
+```
+
+**创建购物车store文件**
+
+
+
+
+
+
+
+
+
+
+
 ### 在 vue3 配置文件中配置路径
 
 导入 vue 组件的时候，可能会由于目录的层级关系出现多个`../../`，可以在`vite.config.js`配置文件中对路径进行设置：
