@@ -1149,7 +1149,17 @@ const counterStore = useCounterStore()
 
 ```
 
+#### 通过解构赋值简化写法
 
+需要引入`storeToRefs`，：
+
+```js
+import { storeToRefs } from 'pinia'
+const pstorage = useProductStorage()
+const { products } = storeToRefs(pstorage)
+```
+
+注意解构赋值只能用于变量（状态），方法无法得到
 
 ### 在 vue3 配置文件中配置路径
 
