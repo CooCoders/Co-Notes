@@ -1269,15 +1269,61 @@ onMounted(() => {
 
 **创建购物车store文件**
 
+`carStore.js`要维护一个 cartList，用于保存不断添加的购物车商品，要实现的两个功能为：
 
+- 添加进购物车功能：页面中点击添加商品后，从当前购物车中查找，如果之前没有添加过，则加入 cartList 中，如果之前添加过，则使其 quantity 加一，添加动作完成之后，将商品的剩余数量 inventory 减一（注意这里的 cartList 中应包含商品的所有属性，并且增加 quantity 属性用于保存数量）
+- 增加计算属性，实时统计总价
 
+首先在 state 中创建保存购物车数据的 cartList ，其数据类型为 数组：
 
+```js
+  state() {
+    return {
+      cartList: []
+    }
+  },
+```
 
+在 action 节点定义添加购物车的逻辑：
 
+```js
+  actions: {
+    addToCart(product) {
+      const p = this.cartList.find((value) => {
+        return value.id === product.id
+      })
 
+      if (p) {
+        p.quantity++
+      } else {
+        // 这里使用展开运算符拓展原有的 product 对象，为其增加数量属性
+        this.cartList.push({
+          ...product,
+          quantity: 1
+        })
+      }
+      // 减少库存
+      product.inventory--
+    }
+  },
+```
 
+这里首先判断要添加的商品 product 是否已经存在于 cartList 中，如果存在则使其数量加一，反之则将商品对象添加进 cartList 并添加 quantity 属性，无论商品是否存在于购物车中，最终都要将库存数量减一
 
+在 getters 节点定义计算属性：
 
+```js
+  getters: {
+    totalPrice() {
+      return this.cartList.reduce((sum, cl) => {
+        sum += cl.price * cl.quantity
+        return sum
+      }, 0)
+    }
+  }
+```
+
+totalPrice 计算属性用于计算 cartList 中所有商品的总价值，其使用方式与 state 中的定义数据一样
 
 ### 在 vue3 配置文件中配置路径
 
