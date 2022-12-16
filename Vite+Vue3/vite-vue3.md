@@ -1315,6 +1315,7 @@ onMounted(() => {
 ```js
   getters: {
     totalPrice() {
+      // 注意 reduce 函数的使用
       return this.cartList.reduce((sum, cl) => {
         sum += cl.price * cl.quantity
         return sum
