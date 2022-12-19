@@ -235,7 +235,7 @@ renderer.render(scene, camera);
 
 renderer的属性 domElement 表示一个 canves，渲染器在上面绘制输出，可以将它添加到 body（全局） 或者 div（局部） 元素 上进行展示
 
-## 其他
+## 实际开发中遇到的问题
 
 ### 改变物体材质，位置
 
