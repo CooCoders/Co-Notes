@@ -128,3 +128,64 @@ const createWindow = () => {
 
 注意上述设置项只是测试时使用，**在实际开发中不要使用**
 
+## 主进程生命周期函数
+
+主进程生命周期函数，例如：
+
+```js
+app.on('window-all-closed', () => {
+  console.log('window all closed')
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('quit', () => {
+  console.log('app quit')
+})
+```
+
+## 在渲染进程中使用 node
+
+通过 webPreferences/preload实现
+
+首先设置 preload：
+
+```js
+webPreferences: {
+    // nodeIntegration: true,
+    // contextIsolation: false
+    preload: path.resolve(__dirname, './render/preload.js')
+}
+```
+
+在 preload.js 文件中写逻辑：
+
+```js
+const fs = require('fs')
+
+
+fs.writeFile("./test.txt", 'some content 2.', () => {
+  console.log('done.')
+})
+```
+
+启动项目，可以看到代码正常执行
+
+## 传递消息
+
+需要使用  contextBridge ，首先在 preload 文件中定义：
+
+```js
+const { contextBridge } = require('electron')
+
+// 这里向 window 注入自定义的 myAPI，然后可以向该对象添加数据
+contextBridge.exposeInMainWorld('myAPI', {
+  platform: process.platform
+})
+```
+
+此时在渲染进程中可以通过 `window.myAPI.platform` 调用传递的数据
+
+
+
