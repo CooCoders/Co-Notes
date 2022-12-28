@@ -191,3 +191,37 @@ contextBridge.exposeInMainWorld('myAPI', {
 
 
 
+渲染进程与主进程之间通信，使用 ipcMain 和 ipcRenderer，首先在主进程中定义：
+
+```js
+ipcMain.handle('send-event', (event, msg) => {
+  console.log(msg)
+})
+```
+
+该方法用于监听 send-event，如果接收到信息，就会打印
+
+在渲染进程中定义：
+
+```js
+const { contextBridge, ipcRenderer } = require('electron')
+
+const handleSend = () => {
+  ipcRenderer.invoke('send-event', 'some text')
+}
+
+// 将 handleSend 挂在 window 
+contextBridge.exposeInMainWorld('myAPI', {
+  platform: process.platform,
+  handleSend
+})
+```
+
+此时在渲染进程中调用，例如，在一个点击函数中：
+
+```js
+document.querySelector('#btn').addEventListener('click', () => {
+  myAPI.handleSend()
+})
+```
+
