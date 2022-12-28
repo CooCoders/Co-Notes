@@ -147,7 +147,7 @@ app.on('quit', () => {
 
 ## 在渲染进程中使用 node
 
-通过 webPreferences/preload实现
+Electron 主进程和渲染进程之间存在安全隔离，如果要在 渲染进程 中使用 node 模块，需要借助预加载文件，通过 webPreferences/preload实现
 
 首先设置 preload：
 
@@ -173,6 +173,8 @@ fs.writeFile("./test.txt", 'some content 2.', () => {
 启动项目，可以看到代码正常执行
 
 ## 传递消息
+
+渲染进程 向 主进程 传递消息：
 
 需要使用  contextBridge ，首先在 preload 文件中定义：
 
