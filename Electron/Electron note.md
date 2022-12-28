@@ -89,3 +89,42 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] ='true'
 win.webContents.openDevTools()
 ```
 
+## 测试使用文件功能
+
+创建脚本文件 `app.js`，用于创建文件：
+
+```js
+const fs = require('fs')
+
+fs.writeFile("./test.txt", 'some content.', () => {
+  console.log('done.')
+})
+```
+
+在 html 文件中引入：
+
+```html
+<script type="module" src="./render/app.js"></script>
+```
+
+使用`type=module`启用 ES6 语法进行模块导入
+
+在 createWindow 函数中启用 nodejs 语法：
+
+```js
+const createWindow = () => {
+  const win = new BrowserWindow({
+    width: 1000,
+    height: 600,
+    webPreferences: {
+      // 开发中不要使用
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  })
+```
+
+此时运行项目，可以看到指定文件夹下有 test.txt 文件生成
+
+注意上述设置项只是测试时使用，**在实际开发中不要使用**
+
