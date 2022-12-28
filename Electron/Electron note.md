@@ -57,7 +57,7 @@ app.whenReady().then(createWindow)
 "start": "nodemon --exec electron ."
 ```
 
-即可使用 nodemon 命令打开 electron 项目
+然后使用命令 `npm run start` 即可运行 electron 项目
 
 ## Electron 主进程与渲染进程
 
@@ -79,5 +79,13 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] ='true'
 
 ```html
 <meta http-equiy="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:;script-src 'self'; style-src 'self' 'unsafe-inline'">
+```
+
+## 打开开发者工具
+
+在 createWindow 函数中添加代码：
+
+```
+win.webContents.openDevTools()
 ```
 
