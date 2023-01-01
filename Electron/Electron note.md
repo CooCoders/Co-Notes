@@ -348,6 +348,45 @@ const win = new BrowserWindow({
 
 通过设置`frame`为 true 或 false 来显示或隐藏标题栏
 
+通过设置 x 属性或 y 属性指定窗口在屏幕上的位置
+
+### 保持页面状态
+
+如果对窗口的大小、位置手动修改后，想要在下一次打开 app 时依然保持该状态，可以借助 electron-win-state 实现此功能
+
+安装：
+
+```
+npm i electron-win-state
+```
+
+使用：
+
+```js
+const WinState = require('electron-win-state').default
+
+const winState = new WinState({
+    defaultWidth: 800,
+    defaultHeight: 600
+})
+
+const win = new BrowserWindow({
+    ...winState.winOptions,
+})
+
+winState.manage(this.win)
+```
+
+
+
+Tip：出现错误`(node:43636) UnhandledPromiseRejectionWarning: TypeError: WinState is not a constructor`，考虑包是否正确导入，此时打印 WinState，结果为`{ default: [class WinState] }`，需要在导入的语句后面加 default：
+
+```
+const WinState = require('electron-win-state').default
+```
+
+
+
 
 
 
