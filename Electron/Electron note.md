@@ -387,7 +387,40 @@ const WinState = require('electron-win-state').default
 
 
 
+### 监测浏览器
 
+例如，使用 webContent 打开开发者工具
+
+```js
+const wc = win.webContents
+wc.openDevTools()
+```
+
+监测页面资源加载是否完成：
+
+```js
+const wc = win.webContents
+wc.on('did-finish-load', () => {
+    console.log('finish')
+})
+
+wc.on('dom-ready', () => {
+    console.log('dom-ready')
+})
+```
+
+监测是否打开新窗口，使用`new-window`
+
+监测用户是否点击右键：`context-menu`：
+
+```js
+wc.on('context-menu', (e, params) => {
+    // e.preventDefault()
+    console.log('menu')
+    // 可以注入 js 代码
+    wc.executeJavaScript(`alert('${params.selectionText}')`)
+})
+```
 
 
 
