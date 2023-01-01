@@ -347,3 +347,19 @@ const win = new BrowserWindow({
 ```
 
 通过设置`frame`为 true 或 false 来显示或隐藏标题栏
+
+
+
+
+
+## 向 nodemon 添加监听某种类型的文件变化
+
+默认情况下，nodemon 只会监听 js 文件的改变，可以在`package.json`文件中 script 节点下修改，例如：
+
+```json
+"scripts": {
+    "start": "nodemon --exec electron . --watch ./ --ext .js,.html,.css,.vue"
+},
+```
+
+（这里使用 npm run start 启动项目）
