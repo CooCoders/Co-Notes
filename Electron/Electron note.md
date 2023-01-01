@@ -225,3 +225,125 @@ document.querySelector('#btn').addEventListener('click', () => {
 })
 ```
 
+## 主进程常用事件
+
+常用的事件有判断 app 是否将要推出、关闭窗体程序、app 失焦等，
+
+例如，判断 app 是否将要退出：
+
+```js
+app.on('before-quit', () => {
+  console.log('before-quit term.')
+})
+```
+
+判断 app 是否 失去/获得 焦点的事件：
+
+```js
+app.on('browser-window-blur', () => {
+  console.log('blur')
+})
+
+app.on('browser-window-focus', () => {
+  console.log('focus')
+})
+```
+
+利用这些事件，可以在某些特定触发场景下进行某些处理
+
+## 方法
+
+使用`app.quit()`退出程序，例如实现配合失焦事件关闭 app：
+
+```js
+app.on('browser-window-blur', () => {
+  console.log('blur')
+  setTimeout(() => {
+    app.quit()
+  }, 3000)
+})
+```
+
+使用`app.getPath()`方法可以获取一些系统目录，例如：
+
+```js
+// 用户桌面目录
+console.log(app.getPath('desktop'))
+// 音乐目录
+console.log(app.getPath('music'))
+// 临时文件目录
+console.log(app.getPath('temp'))
+// 用户数据目录
+console.log(app.getPath('userData'))
+```
+
+## browserWindow
+
+### 加载完成后显示页面 ready-to-show 事件
+
+使用 loadURL 方式加载某些较慢的页面的时候可以看到明显的白屏，为了防止这一现象，可以设置等待加载页面完成之后再显示
+
+首先设置页面显示为 false：
+
+```js
+const win = new BrowserWindow({
+    width: 1000,
+    height: 600,
+    // 页面不显示
+    show: false,
+})
+```
+
+设置页面加载后显示主页面：
+
+```js
+win.once('ready-to-show', () => {
+    win.show()
+})
+```
+
+### 父子窗口设置
+
+可以通过多次实例化 browserWindow 来创建多个窗口，例如：
+
+```js
+// 第一个窗口
+const win = new BrowserWindow({
+    height: 300,
+    width: 400
+})
+
+win.loadURL('http://www.baidu.com')
+
+// 第二个窗口
+const win2 = new BrowserWindow({
+    height: 300,
+    width: 400
+})
+
+win2.loadURL('http://www.baidu.com')
+```
+
+此时创建的两个窗口没有关系，如果想要设置 win2 窗口为 win 的子窗口，可以在 win2 窗口中设置：
+
+```js
+const win2 = new BrowserWindow({
+    height: 300,
+    width: 400,
+    parent: win,
+    // 以模态框方式显示 win2 窗口
+    modal: true,
+})
+```
+
+### 声明窗口的属性设置
+
+在声明窗口的时候可以对属性进行设置，例如设置窗口的背景颜色：
+
+```js
+const win = new BrowserWindow({
+    backgroundColor: '#ccc',
+})
+```
+
+通过设置`frame`为 true 或 false 来显示或隐藏标题栏
