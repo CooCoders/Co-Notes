@@ -424,6 +424,57 @@ wc.on('context-menu', (e, params) => {
 
 
 
+### 对话框设置
+
+使用对话框需要在主进程中从 electron 中导入：
+
+```js
+const {dialog} = require('electron')
+```
+
+可以搭配右键点击等使用对话框，例如文件选择对话框
+
+```js
+win.webContents.on('context-menu', ()=>{
+    dialog.showOpenDialog({
+      // 设置选择按钮的文本
+      buttonLabel: 'Select',
+      // 默认打开的路径
+      defaultPath: app.getPath('desktop'),
+      // 一些参数设置，例如是否允许多选、创建文件夹等
+      properties: ['multiSelections', 'createDirectory', 'openFile', 'openDirectory']
+    }).then((result) => {
+       // 点击选择按钮之后的逻辑
+      console.log(result.filePaths)
+    })
+})
+```
+
+保存对话框：
+
+```js
+dialog.showSaveDialog({}).then(result => {
+    // 注意这里只是显示对话框 实际的保存需要另写逻辑
+    console.log(result.filePath)
+})
+```
+
+消息对话框：
+
+```js
+const answers = ['Yes', 'No', 'Maybe', 'Maybe OK']
+dialog.showMessageBox({
+    title: 'Message Box',
+    message: 'Select one',
+    detail: 'message box detail',
+    buttons: answers
+}).then(({ response }) => {
+    console.log(`User selected: ${answers[response]}`)
+})
+```
+
+
+
 ## 向 nodemon 添加监听某种类型的文件变化
 
 默认情况下，nodemon 只会监听 js 文件的改变，可以在`package.json`文件中 script 节点下修改，例如：
