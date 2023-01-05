@@ -631,7 +631,21 @@ const createTray = require('./tray.js')
 createTray(app, win)
 ```
 
+### 使用高分辨率的图像
 
+在支持高DPI的平台上，可以在图像文件的名称后面添加`@2x`标记其为高分辨率图像，例如，如果`icon.png`是一个标准分辨率的图像，那么`icon@2x.png`可以被视作是具有双倍DPI密度的高分辨率图像，如果想要同时支持不同 DPI 密度的显示器，可以把不同尺寸的图像放在一个文件夹里，并使用不同的密度后缀，而在代码引入时不使用后缀，例如：
+
+```
+icon.png
+icon@2x.png
+icon@4x.png
+```
+
+在使用位置使用：
+
+```
+const appIcon = new Tray('/images/icon.png')
+```
 
 
 
