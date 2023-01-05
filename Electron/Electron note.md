@@ -504,6 +504,91 @@ globalShortcut.register('Ctrl+Y', () => {
 })
 ```
 
+### 菜单显示
+
+使用 Menu 和 MenuItem 模块可以定义菜单，导入模块：
+
+```
+const { Menu, MenuItem } = require('electron')
+```
+
+定义菜单项：
+
+```js
+const mainMenu = Menu.buildFromTemplate([
+    // 自定义菜单内容
+    {
+        label: 'Electron',
+        submenu: [
+            { label: 'Item 1' },
+            {
+                label: 'Item 2',
+                submenu: [
+                    { label: 'submenu 1' },
+                    { label: 'submenu 2' }
+                ]
+            },
+            { label: 'Item 3' }
+        ]
+    },
+    // role：使用系统预置的菜单内容
+    {
+        label: 'Edit',
+        submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { role: 'copy' },
+            { role: 'paste' }
+        ]
+    },
+    // 为菜单项添加动作
+    {
+        label: 'Actions',
+        submenu: [
+            {
+                label: 'DevTools',
+                role: 'toggleDevTools'
+            },
+            {
+                role: 'toggleFullScreen'
+            },
+            {
+                label: 'Greet',
+                click: () => {
+                    console.log('click this menu item')
+                },
+                accelerator: 'Shift+Ctrl+G'
+            }
+        ]
+    }
+])
+```
+
+设置显示菜单：
+
+```js
+Menu.setApplicationMenu(mainMenu)
+```
+
+### 设置右键菜单
+
+右键菜单设置与主菜单类似，只需在右键动作内弹出即可：
+
+```js
+let contextMenu = Menu.buildFromTemplate([
+    { label: 'test item' },
+    { role: 'editMenu' }
+])
+
+wc.on('context-menu', () => {
+    contextMenu.popup()
+})
+```
+
+### 托盘
+
+
+
 
 
 ## 向 nodemon 添加监听某种类型的文件变化
