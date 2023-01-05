@@ -587,6 +587,50 @@ wc.on('context-menu', () => {
 
 ### 托盘
 
+Tray 模块引入托盘，可以为托盘设置图标、点击事件以及功能菜单等，例如`tray.js`：
+
+```js
+const { Tray, app, Menu } = require('electron')
+
+function createTray(app, mainwin) {
+
+  // 图标设置
+  const tray = new Tray('icon.png')
+  // 提示文字设置
+  tray.setToolTip('My app')
+  // 设置点击事件
+  tray.on('click', (e) => {
+    if (e.shiftKey) {
+      app.quit()
+    } else {
+      mainwin.isVisible() ? mainwin.hide() : mainwin.show()
+    }
+  })
+
+  const contextMenu = Menu.buildFromTemplate([
+    { label: 'test item' },
+    {
+      label: 'test item 2', click: () => {
+        // 判断程序的显示或隐藏
+        mainwin.isVisible() ? mainwin.hide() : mainwin.show()
+      }
+    }
+  ])
+  // 设置右键菜单
+  tray.setContextMenu(contextMenu)
+}
+
+module.exports = createTray
+```
+
+在主进程文件中导入后，需要向该函数传入 app 和 主窗口对象：
+
+```
+const createTray = require('./tray.js')
+...
+createTray(app, win)
+```
+
 
 
 
