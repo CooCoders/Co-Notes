@@ -473,6 +473,37 @@ dialog.showMessageBox({
 })
 ```
 
+### 快捷键设置
+
+globalShortcut 模块可以在操作系统中注册/注销全局快捷键，从而为操作定制快捷键操作：
+
+导入 globalShortcut 模块：
+
+```js
+const { app, BrowserWindow, ipcMain, dialog, globalShortcut } = require('electron')
+```
+
+注册快捷键：
+
+```js
+globalShortcut.register('Ctrl+G', () => {
+    dialog.showMessageBox({
+        title: 'warning',
+        message: 'some test sentences.',
+        detail: 'message detail'
+    })
+})
+```
+
+可以通过 unregister 方法注销某个快捷键，例如在按下 ctrl + y 的同时注销上述快捷键：
+
+```js
+globalShortcut.register('Ctrl+Y', () => {
+    console.log('Press Ctrl + Y')
+    globalShortcut.unregister('Ctrl+G')
+})
+```
+
 
 
 ## 向 nodemon 添加监听某种类型的文件变化
