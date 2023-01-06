@@ -647,6 +647,43 @@ icon@4x.png
 const appIcon = new Tray('/images/icon.png')
 ```
 
+## 打包发布 app
+
+安装 electron-packager ：
+
+```
+npm install electron-packager -g
+```
+
+安装 asar：
+
+```
+npm install asar -g
+```
+
+打包命令：
+
+```
+electron-packager <location of project> <name of project> <platform> <architecture> <electron version> <optional options>
+```
+
+其中：
+
+```text
+location of project：项目所在路径
+name of project：打包的项目名字
+platform：确定了你要构建哪个平台的应用（Windows、Mac 还是 Linux）
+architecture：决定了使用 x86 还是 x64 还是两个架构都用
+electron version：electron 的版本
+optional options：可选选项
+```
+
+例如：
+
+```
+electron-packager ./ testapp --platform=win32 --arch=x64 --out=./app --electron-version=22.0.0
+```
+
 
 
 ## 向 nodemon 添加监听某种类型的文件变化
