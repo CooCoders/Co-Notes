@@ -219,3 +219,10 @@ file/
 node_modules/
 ```
 
+### 出现  Another git process seems to be running in this repository
+
+使用 `git add .`命令后如果关闭 git bash，可能会出现这个错误，此时后台会有 Git 进程占用存储库并且被上锁
+
+解决方法：
+
+删除`.git`目录下的`index.lock`文件，或者使用命令：`git clean -f .git/index.lock`，在 linux 下使用 `rm -f ./git/index.lock`命令
