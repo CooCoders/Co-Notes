@@ -657,6 +657,16 @@ app.mount('#app')
 ```vue
 // count 保存要传递的数据
 <Child1Vue :cou="count"></Child1Vue>
+
+// count 必须在父组件中有定义
+const count = "xxxxx"
+const count = 12
+```
+
+如果只是传递简单的字符串，无需使用 v-bind:
+
+```vue
+<Child1Vue text="this is a string"></Child1Vue>
 ```
 
 随后在子组件中获取、使用该自定义属性值：
