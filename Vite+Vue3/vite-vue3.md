@@ -198,6 +198,14 @@ const add = () => {
 - vue3 setup script：用于简化写法的 vue3 语法糖，添加 setup 的 script 标签会自动将所有的顶级变量和函数暴露给 template 使用，无需手动引入组件以及 export default
 - 钩子：
 
+
+
+### ref 和 reactive
+
+数据响应式：响应是指，修改数据之后，视图随之更新（vue 通过为每个传入的数据添加 getter 和 setter 方法，以此追踪每个数据）
+
+res 和 reactive 都用于定义响应式数据，其中 reactive 更推荐定义复杂数据类型，ref 则更推荐定义简单数据类型（ref 是对 reactive 的二次封装，因此在使用 ref 定义引用数据类型的时候，内部会再调用 reactive 实现响应式，使用 ref 定义的数据在访问的时候要使用`.value`获取）
+
 ### 内容渲染指令
 
 #### 插值表达式
