@@ -196,7 +196,7 @@ const add = () => {
 
 - 语法糖：Syntactic Suger，就是在不改变程序运行结果的前提下，对代码的写法进行改变，提高代码的可读性，类如汉语的成语
 - vue3 setup script：用于简化写法的 vue3 语法糖，添加 setup 的 script 标签会自动将所有的顶级变量和函数暴露给 template 使用，无需手动引入组件以及 export default
-- 钩子：
+- 钩子函数
 
 
 
