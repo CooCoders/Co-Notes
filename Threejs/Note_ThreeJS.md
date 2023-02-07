@@ -312,3 +312,84 @@ intersects[0].object.position
 intersects[0].point.x
 ```
 
+### 实现重置视角
+
+关于相机位置的设置有两个：
+
+- 相机位置
+- 相机方向
+
+相机位置使用 position 指定：
+
+```
+camera.position.set(500, 600, 600)
+```
+
+相机方向用于指定相机面向的方向，使用 lookat 函数设置：
+
+```
+camera.lookAt(scene.position)
+```
+
+一般是使用一个射线向量进行指定
+
+通过上述两个设置，即可确定一个相机，因此重置视角的时候需要对上述两个变量设置为初始值，此外还需重新将控制器重置：
+
+```
+controls = new THREE.OrbitControls(camera, renderer.domElement)
+```
+
+Tip：
+
+设置相机的时候：
+
+```
+camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 4000)
+```
+
+最后两个参数，表示视锥体的范围，即可以看到的范围
+
+### 监测物体点击
+
+获取场景中物体点击，首先需要将点击处的坐标转化为 three js 场景中的坐标：
+
+```
+let nowX = e.clientX
+let nowY = e.clientY
+
+// 转换坐标 固定写法
+let x = (nowX / window.innerWidth) * 2 - 1
+let y = -(nowY / window.innerHeight) * 2 + 1
+```
+
+随后需要从相机处与点击位置确定一条射线，该射线穿过的物体即是点击物体，注意这里如果有多个物体在这条蛇线上，则都会被检测到，因此需要设置一个数组进行过滤：
+
+```
+let raycaster = new THREE.Raycaster()
+raycaster.setFromCamera(new THREE.Vector2(x, y), camera)
+
+// 这里 intersectsArr 即为预先设置的数组 用于保存需要检测点击的物体
+let intersects = raycaster.intersectObjects(intersectsArr, true)
+```
+
+### 使用 requestAnimationFrame 优化场景渲染
+
+Three js 实现动画是通过隔一定时间改变物体位置数据实现的，在实现动画上，不推荐使用 timeinterval 函数，推荐使用的方式是 requestAnimationFrame 函数调用渲染函数。
+
+实际使用中，可以通过 requestAnimationFrame 函数来限制动画帧数，减小开销，该函数调用 render 渲染时，不会立即进行渲染，而是向浏览器发送一个请求，具体的执行时间由浏览器决定（一般保持 60 FPS， 具体可以通过 THREE.Clock.getDelta()获取），每个这个时间调用 render 对场景进行渲染
+
+可以借助这一函数人为控制动画的执行帧数，例如设置固定的时间间隔，当累计的时间大于此间隔时候再 render 场景：
+
+```
+let timeAcc = 0
+function render() {
+    timeAcc += clock.getDelta()
+    if (timeAcc > 1 / FPS) {
+        renderer.render(scene, camera)
+        timeAcc = 0
+    }
+    requestAnimationFrame(render)
+}
+```
+
+上述 timeAcc 为时间累加器，浏览器调用 render 的间隔为 clock.getDelta， 因此每次执行 render 将 timeAcc 累加此间隔，当累加器大于给定时间间隔时候，执行内部的 renderer.render(scence, camera)
