@@ -22,11 +22,22 @@ fs.readFile('./text.txt', 'utf-8', function(err, datastr){
 
 写入成功 err 为 null， 写入失败则返回一个错误对象
 
+**注意：**上述两个方法都是异步函数，如先写入文件再读文件，由于异步执行方式，会发现读出内容与写入内容不同，如需按照阻塞方式实现上述过程，需要使用两个方法对应的同步函数：writeFileSync 和 readFileSync，该函数按同步方式运行，在写入文件完成之前不会读文件
+
 ### 文件路径拼接
 
 使用node命令会在默认执行位置后拼接相对路径
 
 使用  `__dirname`得到当前文件所在的目录，然后拼接读取文件的位置，以此解决路径错误
+
+**注意：** 上述方式只有在 CommonJs 类型下使用，如使用 ES6 方式，需要自己定义：
+
+```js
+import { URL } from 'url'
+
+const __filename = new URL('', import.meta.url).pathname
+const __dirname = new URL('', import.meta.url).pathname
+```
 
 
 
@@ -55,6 +66,20 @@ console.log(path.basename(tmpPath, '.file'));  //base
 ```
 
 同样，得到文件的扩展名 ： `path.extname(fpath)`
+
+使用路径解析同样可以得到上述信息：
+
+```
+path.parse(__dirname)
+
+{
+  root: '/',
+  dir: '/C:/Git/Co-Learning/Node.js/review-node',
+  base: 'async-file.js',
+  ext: '.js',
+  name: 'async-file'
+}
+```
 
 
 
@@ -332,7 +357,7 @@ $.ajax({
 })
 ```
 
-此时直接使用 `req.body`取得数据为空数据，需要首先配置中间件 body-parser：
+此时直接使用 `req.body`取得数据为空数据（未配置解析中间件 打印为 undefine ），需要首先配置中间件 body-parser：
 
 ```
 const bodyParser = require('body-parser')
@@ -357,6 +382,27 @@ JSON.stringify(req.body)
 
 ```
 {"name":"sss","age":"23"}
+```
+
+### req.body, req.params, req.query
+
+req.body 用于接收 post 方法的参数
+
+req.query 接收 get 方法传递的参数，直接获取地址栏的参数
+
+req.params 用于接收请求地址`/`后面的参数，例如：
+
+```js
+app.get('/testParams/:name', (req, res) => {
+  console.log(req.params['name'])
+  res.send('req.params test')
+})
+```
+
+访问：
+
+```
+127.0.0.1:80/testParams/taylor
 ```
 
 
