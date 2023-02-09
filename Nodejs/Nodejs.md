@@ -308,7 +308,13 @@ npm init -y
 
 ## Express
 
-基于 node js 的 web 框架（http封装）
+Express 是基于 Node平台的 web 开发框架，其三大核心功能为：
+
+- 托管静态资源：实现静态服务器功能
+- 路由
+  - 路由功能：请求路径与功能的映射
+  - 链式语法支持
+- 中间件
 
 功能：
 
@@ -323,6 +329,7 @@ const express = require('express');
 // 创建server
 const app = express();
 
+// 定义路由
 // 参数1 客户端的请求 url 地址
 // req：请求对象 -- 请求相关的属性和方法
 // res：响应对象  -- 响应相关的属性和方法
@@ -390,11 +397,11 @@ req.body 用于接收 post 方法的参数
 
 req.query 接收 get 方法传递的参数，直接获取地址栏的参数
 
-req.params 用于接收请求地址`/`后面的参数，例如：
+req.params 用于接收请求地址`/`后面的参数（动态参数），例如：
 
 ```js
 app.get('/testParams/:name', (req, res) => {
-  console.log(req.params['name'])
+  console.log(req.params['name'])  // taylor
   res.send('req.params test')
 })
 ```
@@ -407,27 +414,7 @@ app.get('/testParams/:name', (req, res) => {
 
 
 
-### 获取url中的参数
-
-使用 `req.query`对象访问，例如 `req.query.name`
-
-
-
-### 获取url中的动态参数
-
-```js
-// url中通过 :参数名 动态匹配参数
-app.get('/:name', (req, res) => {
-    // req.params 默认为空对象
-    res.send(req.params);
-})
-```
-
-输出的结果为 `{name: xxxxx}`
-
-如果是 `app.get('/:name/:age')`，需要匹配两个动态参数
-
-### 托管静态资源
+### 1. 托管静态资源
 
 通过 express.static() 可以创建一个静态资源服务器，例如：
 
@@ -436,6 +423,8 @@ app.use(express.static('public'))
 ```
 
 表示 **public目录下的资源** 对外公开访问，但是这个目录名本身不会出现在 URL 中，例如 public 文件夹下有 images 文件夹，则访问的路径为：`localhost:80/images/bg.jpg`
+
+**Tip：这里要注意运行 server 的位置，public 文件夹必须与 server.js 文件在同一级**
 
 托管多个静态资源目录，可以多次调用 static 函数，如果有重名的资源，则会自上而下查找
 
@@ -452,7 +441,7 @@ app.use('/public', express.static('./public'))
 
 此时如果想要加载静态资源，需要加入前缀 'public' **(注意前缀中不要有`./`)**
 
-### nodemon
+## nodemon 工具
 
 使用 nodemon 可以监听项目文件的变动，当代码修改后，nodemon 会自动重启项目，方便调试
 
@@ -466,7 +455,7 @@ node app.js  -> nodemon app.js
 
 ### 路由
 
-express 中，**路由指的是客户端与服务器处理函数之间的映射关系**，路由分为三部分：
+express 中，**路由指的是客户端请求与服务器处理函数之间的映射关系**，路由分为三部分：
 
 ```
 app.METHOD(PATH, HANDLER)
@@ -475,6 +464,8 @@ app.METHOD(PATH, HANDLER)
 ```
 
 当请求到达服务器后，需要先经过路由的匹配，只有匹配成功之后，才会调用对应的处理函数（请求类型和URL）
+
+客户端请求会按定义的先后顺序进行匹配，当请求类型和请求的 URL 同事匹配成功时，才会调用对应的处理函数
 
 ### 模块化路由
 

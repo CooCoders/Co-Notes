@@ -75,6 +75,28 @@ console.log(m1)
 // { n1: 10, show: [Function: show] }
 ```
 
+**这里注意一个细节：**，如果默认导出方式只有一个内容需要导出，最好不要使用`{}`包裹起来，例如：
+
+```
+let a
+export default {a}
+```
+
+此时导入该文件：
+
+```
+import a from 'test.js'
+```
+
+如想使用变量 a， 则必须使用对象的方式：
+
+```
+a['a']
+a.a
+```
+
+原因在于使用 default {a} 导出的是一个对象，该对象中有一个成员为 a，如果不添加大括号，则可以直接使用 a 
+
 #### 按需导出与按需导入
 
 按需导出的语法：
@@ -130,6 +152,29 @@ print()
   ```
 
   这里 m1 所对应的就是 01-default-export 模块中默认导出的成员（花括号内为按需导入的成员，默认导入在花括号外边）
+
+Tips：使用按需导出的方式导入路由文件
+
+路由文件：
+
+```js
+import express from 'express'
+
+// 导出 router 要写在定义处
+// 在文件末尾 使用 export router 是错误的
+export const router = express.Router()
+
+router.get('/gettest', (req, res) => {
+  res.send('get request.')
+})
+
+router.post('/posttest', (req, res) => {
+  console.log(req.body)
+  res.send('post request.')
+})
+```
+
+
 
 #### 直接导入
 
