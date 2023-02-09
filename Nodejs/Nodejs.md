@@ -536,6 +536,8 @@ app.get('*', (req, res)=>{
 
 ### 中间件
 
+中间件 middleware 是业务流程的中间处理环节
+
 对请求进行预处理：客户端向服务器发送请求 -> 中间件1  -> 中间件2  -> 处理完毕，响应这次请求
 
 中间件本质上就是一个 function，格式为：
@@ -564,6 +566,19 @@ app.use(mv)
 
 多个中间件之间共享同一份 req 和 res， 因此可以在上游的中间件中，统一为 req 和 res 添加自定义属性或方法，供下游的中间件使用，例如，要获得每次 get 或 post 请求到达的时间，可以在全局中间件中获得当前时间，然后将时间赋值添加为 req 的属性
 
+上述定义可以简写为：
+
+```js
+app.use((req, res, next) => {
+  console.log('测试简化全局中间件')
+  next()
+})
+```
+
+如果定义多个全局中间件，请求到达服务器后，会按照中间件定义的顺序依次进行调用
+
+Tip：注意中间件与路由的定义顺序，如果中间件注册在路由之后，那么该中间件并不会执行，因此，**中间件注册应在路由注册之前！！！！**
+
 **请求到达服务器后会根据全局中间件的顺序进行执行**
 
 ### 局部生效的中间件
@@ -588,9 +603,38 @@ app.get('/', [mv, mv2], (req, res) => {
 
 ### 路由注意事件
 
-- 路由之前定义中间件
-- 一定要在**最后**调用 next（）函数
-- 连续调用多个中间件的时候，中间件之间共享 req 和 res 对象
+- **一定要在注册路由之前注册中间件**
+
+- 可以连续调用多个中间件处理
+
+- 一定要在**最后调用 next（）函数**
+
+- **连续调用多个中间件的时候，中间件之间共享 req 和 res 对象**
+
+  - 因此可以将后续中间件中要使用的数据挂在 req 对象上：
+
+    ```js
+    // 在第一个中间件函数中挂 startTime 属性
+    const local1 = (req, res, next) => {
+      req.startTime = +new Date()
+      console.log('local middleware function 1')
+      next()
+    }
+    
+    const local2 = (req, res, next) => {
+      console.log('local middleware function 2')
+      next()
+    }
+    
+    // 路由
+    // 在路由中使用 startTime 属性
+    app.post('/test', [local1, local2], (req, res) => {
+      console.log(req.startTime)
+      res.send('post request received.')
+    })
+    ```
+
+    
 
 
 
