@@ -707,10 +707,6 @@ app.get('/', [mv, mv2], (req, res) => {
 5. 将解析的数据对象挂在为 req.body
 6. 将自定义中间件封装
 
-### 使用 express 写接口
-
-get / post 挂载 router
-
 
 
 ### CORS跨域资源分享
