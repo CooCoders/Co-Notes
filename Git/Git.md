@@ -83,6 +83,10 @@ Git 工作目录的几种状态：
 
 使用`git init`初始化仓库
 
+### 直接 clone 仓库
+
+如果直接使用 clone 命令拉取远程仓库，可以在 git 项目中找到  https 地址，使用`git clone address`命令建立仓库
+
 ### 新增文件
 
 使用命令 `git add FILENAME`将工作区文件提交到暂存区
